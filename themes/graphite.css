@@ -1,0 +1,54 @@
+/* Graphite：控制台。默认深色，标题和数字用等宽字体，琥珀色作唯一强调色，行距紧凑。配 Basecoat 的 Lyra 风格。 */
+:root {
+  --font-sans: "Instrument Sans";
+  --font-mono: "JetBrains Mono";
+  --font-heading: "JetBrains Mono";
+  --radius: 4px;
+  --background: oklch(0.985 0.002 90);
+  --foreground: oklch(0.22 0.006 90);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.006 90);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.006 90);
+  --primary: oklch(0.22 0.006 90);
+  --primary-foreground: oklch(0.98 0.002 90);
+  --secondary: oklch(0.95 0.004 90);
+  --secondary-foreground: oklch(0.22 0.006 90);
+  --muted: oklch(0.95 0.004 90);
+  --muted-foreground: oklch(0.48 0.008 90);
+  --accent: oklch(0.94 0.005 90);
+  --accent-foreground: oklch(0.22 0.006 90);
+  --border: oklch(0.9 0.004 90);
+  --input: oklch(0.84 0.006 90);
+  --ring: oklch(0.6 0.14 70);
+  --link: oklch(0.47 0.12 65);
+
+  --heading-weight: 500;
+  --heading-tracking: -0.03em;
+  --title-size: 28px;
+  --rule-strong: 1px solid var(--foreground);
+  --bar-radius: 0px;
+  --row-pad: 9px;
+}
+
+.dark {
+  --background: oklch(0.165 0.004 260);
+  --foreground: oklch(0.93 0.004 90);
+  --card: oklch(0.2 0.005 260);
+  --card-foreground: oklch(0.93 0.004 90);
+  --popover: oklch(0.2 0.005 260);
+  --popover-foreground: oklch(0.93 0.004 90);
+  --primary: oklch(0.82 0.15 78);
+  --primary-foreground: oklch(0.2 0.02 78);
+  --secondary: oklch(0.24 0.005 260);
+  --secondary-foreground: oklch(0.93 0.004 90);
+  --muted: oklch(0.24 0.005 260);
+  --muted-foreground: oklch(0.66 0.006 260);
+  --accent: oklch(0.27 0.006 260);
+  --accent-foreground: oklch(0.93 0.004 90);
+  --border: oklch(0.28 0.005 260);
+  --input: oklch(0.36 0.006 260);
+  --ring: oklch(0.82 0.15 78);
+  --link: oklch(0.84 0.13 80);
+  --rule-strong: 1px solid oklch(0.5 0.006 260);
+}

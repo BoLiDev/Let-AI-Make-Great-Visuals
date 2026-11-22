@@ -1,0 +1,58 @@
+/* Moss：柔和。带绿调的暖灰、深绿主色、大圆角，气质更接近产品而不是文档。配 Basecoat 的 Maia 风格。 */
+:root {
+  --font-sans: "Instrument Sans";
+  --font-mono: "Geist Mono";
+  --radius: 12px;
+  --background: oklch(0.985 0.004 130);
+  --foreground: oklch(0.23 0.02 160);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.23 0.02 160);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.23 0.02 160);
+  --primary: oklch(0.36 0.07 160);
+  --primary-foreground: oklch(0.985 0.004 130);
+  --secondary: oklch(0.95 0.012 140);
+  --secondary-foreground: oklch(0.28 0.04 160);
+  --muted: oklch(0.955 0.008 135);
+  --muted-foreground: oklch(0.49 0.02 155);
+  --accent: oklch(0.94 0.016 145);
+  --accent-foreground: oklch(0.28 0.04 160);
+  --border: oklch(0.91 0.01 135);
+  --input: oklch(0.87 0.014 140);
+  --ring: oklch(0.55 0.1 160);
+  --link: oklch(0.4 0.09 160);
+
+  --heading-weight: 600;
+  --heading-tracking: -0.02em;
+  --overview-bg: var(--muted);
+  --overview-pad-x: var(--space-5);
+  --overview-radius: 16px;
+  --rule: 0px solid transparent;
+  --rule-strong: 0px solid transparent;
+  --bar-radius: 999px;
+}
+
+.r-table-wrap {
+  border-top: 1px solid var(--border);
+}
+
+.dark {
+  --background: oklch(0.18 0.012 160);
+  --foreground: oklch(0.94 0.008 135);
+  --card: oklch(0.215 0.014 160);
+  --card-foreground: oklch(0.94 0.008 135);
+  --popover: oklch(0.215 0.014 160);
+  --popover-foreground: oklch(0.94 0.008 135);
+  --primary: oklch(0.82 0.09 155);
+  --primary-foreground: oklch(0.2 0.03 160);
+  --secondary: oklch(0.26 0.016 160);
+  --secondary-foreground: oklch(0.94 0.008 135);
+  --muted: oklch(0.235 0.015 160);
+  --muted-foreground: oklch(0.71 0.018 150);
+  --accent: oklch(0.29 0.02 160);
+  --accent-foreground: oklch(0.94 0.008 135);
+  --border: oklch(0.3 0.016 160);
+  --input: oklch(0.37 0.02 160);
+  --ring: oklch(0.7 0.1 158);
+  --link: oklch(0.82 0.09 155);
+}

@@ -1,0 +1,52 @@
+/* Ink：工程文档。直角、墨色、细线，强调靠粗细和线条而不是色块。配 Basecoat 的 Sera 风格。 */
+:root {
+  --font-sans: "IBM Plex Sans";
+  --font-mono: "IBM Plex Mono";
+  --radius: 0px;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0.02 262);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 262);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.02 262);
+  --primary: oklch(0.2 0.02 262);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.004 262);
+  --secondary-foreground: oklch(0.2 0.02 262);
+  --muted: oklch(0.96 0.004 262);
+  --muted-foreground: oklch(0.47 0.015 262);
+  --accent: oklch(0.95 0.006 262);
+  --accent-foreground: oklch(0.2 0.02 262);
+  --border: oklch(0.89 0.006 262);
+  --input: oklch(0.8 0.01 262);
+  --ring: oklch(0.45 0.19 262);
+  --link: oklch(0.42 0.19 262);
+
+  --heading-weight: 600;
+  --heading-tracking: -0.015em;
+  --title-size: 34px;
+  --rule-strong: 2px solid var(--foreground);
+  --bar-radius: 0px;
+  --row-pad: 10px;
+}
+
+.dark {
+  --background: oklch(0.16 0.012 262);
+  --foreground: oklch(0.95 0.005 262);
+  --card: oklch(0.2 0.014 262);
+  --card-foreground: oklch(0.95 0.005 262);
+  --popover: oklch(0.2 0.014 262);
+  --popover-foreground: oklch(0.95 0.005 262);
+  --primary: oklch(0.95 0.005 262);
+  --primary-foreground: oklch(0.18 0.012 262);
+  --secondary: oklch(0.25 0.014 262);
+  --secondary-foreground: oklch(0.95 0.005 262);
+  --muted: oklch(0.25 0.014 262);
+  --muted-foreground: oklch(0.7 0.015 262);
+  --accent: oklch(0.28 0.016 262);
+  --accent-foreground: oklch(0.95 0.005 262);
+  --border: oklch(0.3 0.014 262);
+  --input: oklch(0.4 0.016 262);
+  --ring: oklch(0.72 0.14 262);
+  --link: oklch(0.78 0.12 262);
+}

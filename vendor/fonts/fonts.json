@@ -1,0 +1,13 @@
+{
+  "geist": { "family": "Geist", "files": [{ "file": "geist-latin-wght-normal.woff2", "weight": "100 900" }] },
+  "geist-mono": { "family": "Geist Mono", "files": [{ "file": "geist-mono-latin-wght-normal.woff2", "weight": "100 900" }] },
+  "hanken-grotesk": { "family": "Hanken Grotesk", "files": [{ "file": "hanken-grotesk-latin-wght-normal.woff2", "weight": "100 900" }] },
+  "instrument-sans": { "family": "Instrument Sans", "files": [{ "file": "instrument-sans-latin-wght-normal.woff2", "weight": "400 700" }] },
+  "ibm-plex-sans": { "family": "IBM Plex Sans", "files": [{ "file": "ibm-plex-sans-latin-wght-normal.woff2", "weight": "100 700" }] },
+  "ibm-plex-mono": { "family": "IBM Plex Mono", "files": [
+    { "file": "ibm-plex-mono-latin-400-normal.woff2", "weight": "400" },
+    { "file": "ibm-plex-mono-latin-500-normal.woff2", "weight": "500" },
+    { "file": "ibm-plex-mono-latin-600-normal.woff2", "weight": "600" }
+  ] },
+  "jetbrains-mono": { "family": "JetBrains Mono", "files": [{ "file": "jetbrains-mono-latin-wght-normal.woff2", "weight": "100 800" }] }
+}

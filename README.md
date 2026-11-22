@@ -4,7 +4,29 @@
 
 方案由四部分组成：**内置组件库 + 模板 + Skill + 评测闭环**。所有依赖都拷入仓库，产出物不访问外网。
 
-> 当前状态：只完成了调研和方案设计，尚无实现。调研原文在 [`research/`](research/)，其中每条结论都标了核实程度；不少来源只看到了搜索摘要。
+> 当前状态：调研和方案设计已完成；正在做第一步，用一份模拟的代码扫描报告对比几套外观（见下方"外观预览"）。Skill、模板和评测集尚未实现。调研原文在 [`research/`](research/)，其中每条结论都标了核实程度；不少来源只看到了搜索摘要。
+
+## 外观预览
+
+同一份报告（列表页 + 子应用详情页），套用五套外观。用浏览器打开 [`preview/out/scan-report-compare.html`](preview/out/scan-report-compare.html)，底部的切换条可以在外观之间切换；每套外观也有独立文件，截图在 [`preview/screenshots/`](preview/screenshots/)。
+
+| 外观 | Basecoat 风格 | 字体 | 特点 |
+|---|---|---|---|
+| A 对照组 | Vega（默认） | Geist | 未改动的 shadcn，纯灰阶 |
+| B Ink 工程文档 | Sera | IBM Plex Sans / Mono | 直角、墨色、粗顶线 |
+| C Slate 蓝灰 | Nova | Hanken Grotesk / JetBrains Mono | 带蓝调的中性色，概览放在面板里 |
+| D Graphite 控制台 | Lyra | Instrument Sans / JetBrains Mono | 默认深色，琥珀色强调 |
+| E Moss 柔和 | Maia | Instrument Sans / Geist Mono | 绿调暖灰，大圆角 |
+
+重新生成：`node tools/build-preview.mjs`（只用 Node 标准库）。截图和基础检查：`node tools/shot.mjs <html> <输出前缀>`（需要 Playwright）。
+
+目录：
+
+- `vendor/`：拷入的第三方文件，见 [`vendor/README.md`](vendor/README.md)
+- `components/report.css`：报告组件层，叠加在 Basecoat 之上
+- `themes/`：外观主题，只覆盖变量
+- `preview/scan-report/`：模拟数据和页面脚本
+- `tools/`：构建和截图脚本
 
 ## 一、为什么 AI 做的东西有 AI 感
 

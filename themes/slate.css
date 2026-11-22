@@ -1,0 +1,57 @@
+/* Slate：冷静的蓝灰。带一点蓝调的中性色，概览放在浅色面板里，中等圆角。配 Basecoat 的 Nova 风格。 */
+:root {
+  --font-sans: "Hanken Grotesk";
+  --font-mono: "JetBrains Mono";
+  --radius: 8px;
+  --background: oklch(0.985 0.004 250);
+  --foreground: oklch(0.24 0.035 258);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.035 258);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.035 258);
+  --primary: oklch(0.33 0.09 260);
+  --primary-foreground: oklch(0.99 0.002 250);
+  --secondary: oklch(0.95 0.01 250);
+  --secondary-foreground: oklch(0.28 0.05 258);
+  --muted: oklch(0.955 0.008 250);
+  --muted-foreground: oklch(0.5 0.03 255);
+  --accent: oklch(0.94 0.014 250);
+  --accent-foreground: oklch(0.28 0.05 258);
+  --border: oklch(0.91 0.012 250);
+  --input: oklch(0.87 0.016 250);
+  --ring: oklch(0.55 0.14 258);
+  --link: oklch(0.42 0.14 260);
+
+  --heading-weight: 650;
+  --heading-tracking: -0.02em;
+  --rule-strong: 1px solid var(--border);
+  --overview-bg: var(--card);
+  --overview-pad-x: var(--space-5);
+  --overview-radius: 12px;
+  --bar-radius: 3px;
+}
+
+.r-overview {
+  border: 1px solid var(--border);
+}
+
+.dark {
+  --background: oklch(0.19 0.02 258);
+  --foreground: oklch(0.94 0.01 250);
+  --card: oklch(0.225 0.024 258);
+  --card-foreground: oklch(0.94 0.01 250);
+  --popover: oklch(0.225 0.024 258);
+  --popover-foreground: oklch(0.94 0.01 250);
+  --primary: oklch(0.86 0.06 255);
+  --primary-foreground: oklch(0.22 0.04 258);
+  --secondary: oklch(0.27 0.026 258);
+  --secondary-foreground: oklch(0.94 0.01 250);
+  --muted: oklch(0.27 0.026 258);
+  --muted-foreground: oklch(0.72 0.025 255);
+  --accent: oklch(0.3 0.03 258);
+  --accent-foreground: oklch(0.94 0.01 250);
+  --border: oklch(0.31 0.026 258);
+  --input: oklch(0.38 0.03 258);
+  --ring: oklch(0.7 0.12 258);
+  --link: oklch(0.8 0.1 255);
+}
