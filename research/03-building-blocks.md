@@ -5,12 +5,16 @@
 
 ## 0. 结论先行
 
-1. **主体 CSS 应该自建一个很薄的 token + 组件层**（约 15–25KB，直接内联），而不是采用现成组件库。现成库要么依赖运行时编译（Tailwind browser）、要么长相就是"AI 默认脸"（shadcn 默认主题、daisyUI、Pico），要么对"报告 / 解释页 / 幻灯片"这类排版型产物覆盖很差（它们几乎都是为 App UI 设计的）。
-2. 但 **token 的命名沿用 shadcn/ui 的约定**（`--background / --foreground / --card / --muted / --primary / --border / --ring / --chart-1..5`），色阶取 Radix Colors 的 12 级语义，缓动 / 阴影 / 尺寸可参考 Open Props。这样模型"天生会用"，还能直接导入 tweakcn 等主题。
-3. **图表默认：手写 SVG（简单图）→ Observable Plot（数据图）→ ECharts 6（强交互 / 仪表盘）**。图示默认手写 SVG / HTML+CSS，复杂图才用 Mermaid 12，并且必须走 `base` 主题 + 从 token 映射的 `themeVariables`。
-4. **幻灯片默认自写**：固定 16:9 舞台 + 横向翻页的约 150 行 JS（frontend-slides、guizang-ppt-skill 这两个最流行的 skill 都是这条路线）。reveal.js 6 作为需要演讲者视图 / 插件时的备选。可编辑 PPTX 走 pptxgenjs 原生生成，不走 HTML 转换。
-5. **离线分三档**：A 零依赖（只有内联 CSS + 内联 SVG）；B CDN 固定版本 + 降级；C 把库内联进文件。Mermaid（5.4MB）、D2（8.2MB）、Scalar（4.5MB）体积太大，离线时只能在生成阶段预渲染成 SVG / 静态 HTML。
-6. **中文字体默认用系统字体栈**，不要内嵌整套 CJK 字体。标题想要有个性的中文字时，联网用 Google Fonts / 中文网字计划的分包，离线用 `pyftsubset` 只抽用到的几十个字再 base64 内嵌。
+> **2026-11-22 追加的硬约束**：所有东西必须**拷进仓库（vendored）**，运行时不走 CDN，使用时最好不需要 `npm install`，许可证必须允许拷入公司仓库；视觉基础倾向 shadcn/ui 或更新的流行库。
+> **第 12 节是在这个约束下重写的最终建议，以它为准。** 第 1–8 节的对比数据仍然有效；第 9、10 节是约束出现之前的版本，其中"CDN 固定版本""联网字体"等说法已被第 12 节取代。
+
+1. **视觉基础用 shadcn 的设计语言，通过 [Basecoat](https://basecoatui.com/) 落地**：它是 shadcn/ui 的原生 HTML/CSS/JS 移植（MIT，不需要 React，不需要构建），发布包里有已经编译好的独立 CSS，并且跟上了 shadcn 2025-12 之后推出的全部八套风格（Vega、Nova、Maia、Lyra、Mira、Luma、Sera、Rhea）。每套风格约 290KB（gzip 约 30KB），外加 53KB 的可选 JS。
+2. **在它上面自建一个薄的"排版型组件"层**（约 25KB）：报告、解释页、幻灯片需要的指标卡、发现条目、带注释的图表容器、侧注、封面、版式，shadcn 生态里没有。这一层只用 shadcn 的变量（`--background`、`--primary`、`--chart-1` 等），所以换风格包时自动跟着变。
+3. **图表**：手写 SVG → Observable Plot + D3（共 480KB，ISC）→ ECharts 6（1095KB，Apache-2.0）。**图示**：默认手写 SVG；复杂图用 Mermaid（完整版 5.4MB，或精简版 2.8MB），按 `base` 主题换肤。
+4. **幻灯片自写**（零依赖）；可编辑 PPTX 用 pptxgenjs（450KB，MIT）。
+5. **字体**：拉丁字体用 Fontsource 的 OFL woff2 文件自托管，每个文件 20–60KB；中文默认系统字体栈，思源黑体 / 宋体、霞鹜文楷作为可选包（4–13MB 一套）。
+6. **仓库总占用估算**：核心约 8MB；加上全部可选项（Mermaid 完整版、API 文档渲染器、三套中文字体）约 45MB。单个产物内联后通常在 0.4–1.5MB。
+7. **需要法务确认的许可证**：D2（MPL-2.0）、Mermaid 包内依赖 elkjs（EPL-2.0，是否打进了 min.js 未核实）、Vega 与 highlight.js（BSD-3，宽松但不在给定清单里）、Fontshare 字体（不可再分发）、各厂商中文字体、guizang-ppt-skill（据称 AGPL-3.0）。
 
 ## 关于核实程度
 
@@ -209,8 +213,8 @@ mermaid.initialize({
   look: 'neo',                   // 或 'handDrawn' / 'classic'
   themeVariables: {              // 只接受十六进制色值，不认颜色名
     primaryColor: '#f4f1ea', primaryTextColor: '#1a1a1a', primaryBorderColor: '#1a1a1a',
-    lineColor: '#1a1a1a', fontFamily: 'var 不可用，需写字体名', fontSize: '15px'
-  }
+    lineColor: '#1a1a1a', fontFamily: 'Geist, sans-serif', fontSize: '15px'
+  }                              // fontFamily 里能否写 var(--font-sans) 未核实，先写字体名
 });
 ```
 
@@ -359,7 +363,7 @@ mermaid.initialize({
 
 ---
 
-## 9. 推荐技术栈
+## 9. 推荐技术栈（约束出现之前的版本，已被第 12 节取代）
 
 ### 9.1 默认栈：自有薄层 + Plot / SVG
 
@@ -395,7 +399,7 @@ mermaid.initialize({
 
 ---
 
-## 10. 自建 token + 组件层，还是采用现成库
+## 10. 自建 token + 组件层，还是采用现成库（结论在第 12.7 节有更新）
 
 ### 支持自建
 
@@ -430,3 +434,176 @@ mermaid.initialize({
 - beautiful-mermaid 的仓库地址与浏览器端可用的打包形式；D2.js 的主题参数名。
 - 第 6.3、8 节中标注为既有知识的范例与设计系统清单。
 - 全文"模型可靠度"一栏均为判断，没有测量。
+
+---
+
+## 12. 在"全部拷入仓库、无运行时外部依赖"约束下的重写
+
+约束：运行时不访问任何 CDN；使用时最好不需要 `npm install`；许可证须允许拷入公司仓库（MIT / Apache-2.0 / ISC / OFL 视为可以，其他一律标出）；视觉基础倾向 shadcn/ui 或更新的流行库。
+
+本节的版本、许可证、体积均为【实测】（npm registry 元数据和 tarball 内文件），许可证取自 npm 的 `license` 字段，**没有逐个打开 LICENSE 文件，也没有审计压缩包内打进去的第三方依赖**。
+
+### 12.1 CSS / 组件库的可拷入性
+
+| 候选 | 许可证 | 需要 React / 构建吗 | 无构建的单文件形态 | 拷入体积 | 结论 |
+|---|---|---|---|---|---|
+| shadcn/ui（CLI `shadcn` 4.23.0） | MIT | 需要 React + Tailwind 构建；2026-07 起默认底层是 Base UI，另可选 Radix、React Aria【搜索】 | 组件代码本身用不了。能拷的是**变量约定和各风格的取值**（一段 `:root` / `.dark` 的 CSS 变量） | 几 KB | 作为设计语言采用，代码不拷 |
+| **Basecoat** 1.2.1 | MIT；无运行时依赖（`dependencies` 为空） | 不需要 | 包内 `dist/basecoat.cdn.min.css` 是 Tailwind 4.3.5 编译好的独立产物，自带 oklch 变量和 `.btn` 等组件类；`dist/js/all.min.js` 为原生 JS | 默认风格 287KB / gz 29KB；各风格包如 `basecoat-nova.cdn.min.css` 299KB / gz 30KB；无风格的 `basecoat-base.cdn.min.css` 128KB / gz 17KB；JS 53KB / gz 13KB，也可按组件单独拷（accordion、dropdown-menu、select、sidebar 等） | **首选** |
+| Tailwind CSS 4.3.5 | MIT | 浏览器版是运行时编译；CLI 需要 Node | 两条路：(a) 拷 `@tailwindcss/browser` 的 `index.global.js`（280KB）进仓库并内联，仍是运行时编译；(b) 我们在**发布组件库时**用 `@tailwindcss/cli` 预编译一份固定的工具类 CSS，使用时零构建 | (a) 280KB；(b) 取决于收录多少工具类，估计 10–40KB【未实测】 | 只走 (b)，且只收布局 / 间距类 |
+| daisyUI 5.8.2 | MIT | 不需要 | `daisyui.css` + `themes.css` | 1154KB / gz 66KB + 37KB | 可拷，但体积大、风格偏圆润彩色，与 shadcn 方向不一致 |
+| Franken UI 2.1.2 | MIT | 不需要 | `core.min.css` + `core.iife.js` | 191KB + 233KB | 可拷；JS 偏重，发版节奏慢于 Basecoat |
+| Web Awesome 3.15.0（免费部分） | MIT | 不需要 | 85 个组件各自成文件、按需加载，难以合成单文件 | 整包 tarball 3.2MB | 可拷但不适合单文件 |
+| Open Props 1.7.23 | MIT | 不需要 | 一个 CSS | 28KB / gz 7KB | 可拷；用作缓动、阴影等数值来源 |
+| Radix Colors 3.0.0 | MIT | 不需要 | 每色一个 CSS | 整包 236KB | 可拷；只取需要的色阶 |
+| Pico 2.1.1 / Oat 1.1.0 / Tufte CSS 1.9.0 | MIT | 不需要 | 一个 CSS | 81KB / 31KB / 6KB | 可拷；作为极简或学术主题的参考 |
+| missing.css 1.3.0 | BSD-2-Clause | 不需要 | 一个 CSS | 小 | **标出**：宽松许可，但不在给定清单里 |
+| Material Web 2.5.0 | Apache-2.0 | 需要 ESM 打包 | 无现成单文件 | — | 维护模式，不建议 |
+| UnoCSS runtime 66.13.0 | MIT | 运行时编译 | `uno.global.js` 186KB | 186KB | 与 Tailwind (a) 同样的问题，不建议 |
+
+### 12.2 shadcn 生态里值得"抄"的东西（2025–2026）
+
+shadcn 生态几乎全是 React 组件，在无构建约束下**代码拷不了，能拷的是三样东西：变量取值、风格决策（圆角、间距、字重、阴影）、组件的结构与命名**。
+
+| 来源 | 是什么 | 许可证 | 对我们的用法 |
+|---|---|---|---|
+| [shadcn/ui 八套风格](https://ui.shadcn.com/docs/changelog/2025-12-shadcn-create) | 2025-12 随 `shadcn create` 推出 Vega、Nova、Maia、Lyra、Mira，2026 年 3–5 月又加了 Luma、Sera、Rhea【搜索】 | MIT | 这是目前"流行的 shadcn 长相"的官方定义。Basecoat 已全部移植成独立 CSS，直接拷 |
+| [tweakcn](https://github.com/jnsahaj/tweakcn) | shadcn 变量的可视化主题编辑器 + 社区主题 | 【未核实】 | 导出的就是一段 oklch 变量，可作为额外配色主题来源。拷入前确认仓库许可证和单个社区主题的归属 |
+| [官方 registry 索引](https://ui.shadcn.com/r/registries.json) | 第三方 registry 的目录【搜索】 | 各自不同 | 选型时的入口 |
+| Magic UI | 动效组件 | MIT【搜索】 | 参考动效做法（数字滚动、渐显），用原生 CSS 重写 |
+| ReUI | 大量组件与区块，有付费 Pro | MIT【搜索】 | 参考数据表格、筛选器等结构 |
+| Kibo UI | 可组合的高阶组件（看板、甘特、代码块等） | MIT【搜索】 | 参考报告里用得上的高阶组件形态 |
+| Origin UI、Aceternity UI、React Bits、Motion Primitives、Tailark | 组件 / 动效 / 落地页区块 | **【未核实】** | 许可证未确认前只看不抄 |
+| Shadcnblocks、Tailwind Plus | 区块库 | 商业授权 | **不可拷** |
+| shadcn 的图表组件 | 基于 Recharts 3.11.0（MIT）的 React 封装 | MIT | 代码用不了；它的 `--chart-1..5` 变量约定和克制的图表样式值得照搬到 Plot / ECharts 主题里 |
+| Tremor（`@tremor/react` 3.18.7，npm 上 2025-01 后未更新） | 仪表盘组件 | Apache-2.0 | 参考指标卡、迷你图的版式 |
+
+提醒：以上 MIT 结论来自二手对比文章，这类文章细节常有出入，拷任何东西之前要看原仓库的 LICENSE。
+
+### 12.3 字体：自托管、内嵌与许可证
+
+**拉丁字体**：从 [Fontsource](https://fontsource.org/) 的 npm 包里直接取 woff2 文件，许可证随字体（下表均为 OFL-1.1）。OFL 允许随软件打包和再分发，要求附带许可证文本；对字体做子集化属于"修改版"，若原字体声明了保留字体名则有改名要求【未核实各字体是否声明保留名】。
+
+| 字体 | 包与版本 | 拉丁子集 woff2 体积 |
+|---|---|---|
+| Geist（可变） | `@fontsource-variable/geist` 5.3.0 | 28KB |
+| Geist Mono（可变） | `@fontsource-variable/geist-mono` 5.3.0 | 22KB |
+| Instrument Sans（可变） | `@fontsource-variable/instrument-sans` 5.3.0 | 29KB（含宽度轴 55KB） |
+| Hanken Grotesk（可变） | `@fontsource-variable/hanken-grotesk` 5.3.0 | 33KB |
+| IBM Plex Sans（静态） | `@fontsource/ibm-plex-sans` 5.3.0 | 每字重约 22KB |
+| Fraunces（可变） | `@fontsource-variable/fraunces` 5.3.0 | 35KB（含视觉尺寸轴 65KB，全轴 118KB） |
+| Newsreader（可变） | `@fontsource-variable/newsreader` 5.3.0 | 正体 56KB、斜体 63KB（含视觉尺寸轴 128 / 143KB） |
+| Source Serif 4（可变） | `@fontsource-variable/source-serif-4` 5.3.1 | 49KB（含视觉尺寸轴 119KB） |
+| Instrument Serif（静态） | `@fontsource/instrument-serif` 5.3.0 | 正体 20KB、斜体 21KB |
+| JetBrains Mono（可变） | `@fontsource-variable/jetbrains-mono` 5.3.0 | 39KB |
+
+Basecoat 的 CSS 默认字体栈写的是 Geist / Geist Mono，所以这两个（共 50KB）是必拷项。按 5 个主题、每个主题 2–3 个文件估算，拉丁字体总共约 0.5MB。内嵌进单文件用 base64，体积增加约三分之一。
+
+**中文字体**
+
+| 字体 | 许可证 | 可拷入吗 | 体积 | 建议 |
+|---|---|---|---|---|
+| 系统字体栈（苹方、微软雅黑、Noto Sans CJK 等） | 不涉及分发 | — | 0 | **默认** |
+| 思源黑体 Noto Sans SC（可变） | OFL-1.1 | 可以 | `@fontsource-variable/noto-sans-sc` 5.3.1：101 个按 `unicode-range` 切好的分包，合计 4.4MB，每个约 60KB | 可选包。多文件输出时浏览器只读取用到的分包 |
+| 思源宋体 Noto Serif SC（可变） | OFL-1.1 | 可以 | 合计 5.9MB | 可选包。解决 Windows 没有好宋体的问题 |
+| 霞鹜文楷（屏幕版） | npm 包标 MIT，字体本身应为 OFL【未核实】 | 应该可以 | `lxgw-wenkai-screen-web` 1.530.0：单个字重 259 个分包合计 13.4MB | 可选包，体积最大 |
+| 得意黑 | OFL【未核实】 | 应该可以 | 【未测】 | 仅标题用，按需 |
+| 阿里巴巴普惠体、MiSans、HarmonyOS Sans、OPPO Sans | 各厂商自有协议 | **标出**：免费商用不等于可再分发，需逐个确认 | — | 不拷 |
+| Fontshare 全部字体（Satoshi 等） | ITF Free Font License | **标出**：不可再分发【未核实条款原文】 | — | 不拷 |
+
+单文件产物想内嵌中文字体，只有子集化一条路：生成时按页面实际用字抽取，几十到几百个字通常是几十 KB【未实测】。这需要一个生成期工具（如 Python 的 fonttools，MIT【未核实】），与"使用时不装依赖"的约束有冲突，所以建议：**默认系统字体；需要品牌化中文字体时输出为"HTML + assets 目录"的多文件形态，直接引用仓库里的分包**。
+
+### 12.4 图表 / 图示 / 幻灯片 / 文档：可拷入的单文件构建
+
+| 库 | 版本 | 许可证 | 拷哪个文件 | 体积（原始 / gzip） | 备注 |
+|---|---|---|---|---|---|
+| Observable Plot | 0.6.19 | ISC | `dist/plot.umd.min.js` | 206KB / 67KB | 必须同时拷 D3，且 D3 先加载 |
+| D3 | 7.9.2 | ISC | `dist/d3.min.js` | 274KB / 90KB | |
+| ECharts | 6.1.0 | Apache-2.0 | `dist/echarts.min.js` | 1095KB / 360KB | Apache 要求保留 LICENSE 和 NOTICE |
+| Chart.js | 4.6.1 | MIT | `dist/chart.umd.min.js` | 205KB / 69KB | 可选；默认观感需全面覆盖 |
+| uPlot | 1.6.32 | MIT | `dist/uPlot.iife.min.js` | 49KB / 21KB | 可选；仅大量时间序列 |
+| Vega + Vega-Lite + Vega-Embed | 6.4.0 / 6.5.0 / 7.4.0 | BSD-3-Clause（**标出**） | 三个 `build/*.min.js` | 500 + 251 + 59KB | 不建议：三个文件且许可证不在清单里 |
+| ApexCharts | 8.9.1 | 自有许可（**标出**） | — | — | 不拷 |
+| Mermaid（完整） | 12.3.0 | MIT | `dist/mermaid.min.js` | 5408KB / 1550KB | 包依赖里有 elkjs（EPL-2.0）、DOMPurify（MPL-2.0 或 Apache-2.0 二选一）等，**是否打进 min.js 未核实，需审计** |
+| Mermaid（精简） | `@mermaid-js/tiny` 12.3.0 | MIT | `dist/mermaid.tiny.js` | 2785KB / 761KB | 不支持思维导图、架构图、KaTeX；官方说明它面向 CDN 使用 |
+| beautiful-mermaid | 1.1.3 | MIT | 只有 ESM 的 `dist/index.js`，没有现成的浏览器单文件 | — | 内部用 ELK.js（EPL-2.0，**标出**）；要用得自己打包 |
+| D2 | `@terrastruct/d2` 0.1.33 | MPL-2.0（**标出**：文件级 copyleft） | `dist/browser/index.js` | 8195KB | 不建议拷 |
+| rough.js | 4.6.6 | MIT | `bundled/rough.js` | 27KB / 8KB | 手绘风格 |
+| reveal.js | 6.0.2 | MIT | `dist/reveal.js` + `dist/reveal.css` + 主题 | 116KB + 52KB | 可选；默认自写舞台 |
+| PptxGenJS | 4.0.1 | MIT | `dist/pptxgen.bundle.js` | 450KB / 153KB | 浏览器和 Node 都能用，生成原生可编辑 PPTX |
+| dom-to-pptx | 2.1.2 | MIT | `dist/dom-to-pptx.bundle.js` | 3682KB / 994KB | 可选；还原度需实测 |
+| Marp / Slidev | — | MIT | 需要 Node 工具链 | — | 不符合约束 |
+| Redoc | 3.2.0 | MIT | `bundles/redoc.standalone.js` | 2333KB / 661KB | 可选（有 OpenAPI 时） |
+| Scalar | 1.82.1 | MIT | `dist/browser/standalone.js` | 4510KB / 1299KB | 可选；观感更新，体积翻倍 |
+| Stoplight Elements | 9.0.30 | Apache-2.0 | 【未测】 | — | 不建议 |
+| Paged.js | 0.4.3 | MIT | `dist/paged.polyfill.min.js` | 491KB / 94KB | 可选；默认用原生打印 CSS |
+| Prism | 1.30.0 | MIT | `prism.js`（核心，语言包另算） | 56KB / 16KB | 代码高亮 |
+| highlight.js | 11.12.0 | BSD-3-Clause（**标出**） | `highlight.min.js` | 124KB / 41KB（11.11.1 测得） | 用 Prism 可避开许可证问题 |
+| KaTeX | 0.19.1 | MIT | `katex.min.js` + `katex.min.css` + 字体 | 266KB + 24KB，字体另算 | 可选（有公式时） |
+| Lucide | 1.77.0 | ISC | `lucide-static` 里的单个 SVG | 2410 个图标；精选 150 个约 60KB【估算】 | 不拷 487KB 的全量 JS |
+| Phosphor / Tabler / Heroicons | 2.1.1 / 3.52.0 / 2.2.0 | MIT | 单个 SVG | 1512 / 6545 / 324 个 | 可选的替代图标集 |
+| Alpine.js | 3.17.5 | MIT | — | — | Basecoat 1.2.1 的 JS 是原生实现，本次未见依赖 Alpine（搜索结果里"依赖 Alpine"的说法应是旧版本） |
+
+### 12.5 "使用时不装依赖"下，单文件怎么来
+
+三种形态，建议都支持，默认第一种：
+
+1. **内联单文件**：skill 附带一个只用标准库的小脚本（Python 或 Node 均可），把产物里引用的 `vendor/` 下的 CSS、JS、字体（base64）替换成内联内容。agent 写 HTML 时照常写 `<link href="vendor/...">`，最后跑一次脚本。
+2. **HTML + assets 目录**：直接把用到的文件复制到产物旁边。适合带中文字体分包或 Mermaid 这种大文件的情况。
+3. **预渲染**：图示在生成阶段渲染成 SVG 再内联，运行时不带库。这需要无头浏览器或 Node，不满足"零安装"，只作为环境具备时的优化。
+
+内联体积可以再压：Basecoat 的 CSS 里大部分组件一个报告用不到，可以写一个按选择器裁剪的小脚本【未实现，效果未测】。
+
+### 12.6 最终建议（约束版）
+
+| 层 | 拷入内容 | 许可证 | 仓库占用 |
+|---|---|---|---|
+| 视觉基础 | Basecoat 1.2.1：默认风格 + 八套 shadcn 风格包的 `*.cdn.min.css`，`dist/js/` | MIT | 约 2.7MB（9 × 约 0.3MB）+ 53KB；若只留 3 套风格约 0.9MB |
+| 排版型组件层 | 自写：指标卡、callout、发现条目、图表容器、时间线、侧注、封面、目录、幻灯片舞台与版式、打印样式；只引用 shadcn 变量 | 自有 | 约 25KB |
+| 布局工具类 | 发布时用 Tailwind CLI 预编译的一小份工具类（可选） | MIT | 约 10–40KB【估算】 |
+| 拉丁字体 | Geist、Geist Mono，加 4 个主题的标题 / 正文字体 | OFL-1.1 | 约 0.5MB |
+| 图表 | Plot + D3；ECharts | ISC；Apache-2.0 | 0.48MB + 1.1MB |
+| 图示 | 手写 SVG 配方；Mermaid 精简版；rough.js | MIT | 2.8MB + 27KB |
+| 幻灯片 | 自写舞台（含在组件层里） | 自有 | 0 |
+| PPTX | PptxGenJS | MIT | 0.45MB |
+| 代码高亮 | Prism 核心 + 十来种语言 | MIT | 约 0.1MB |
+| 图标 | Lucide 精选子集 + 索引 | ISC | 约 0.1MB |
+| **核心合计** | | | **约 8MB**（只留 3 套风格约 6.5MB） |
+
+| 可选包 | 许可证 | 增量 |
+|---|---|---|
+| Mermaid 完整版（替换精简版） | MIT（依赖待审计） | +2.6MB |
+| Redoc 或 Scalar | MIT | +2.3MB 或 +4.5MB |
+| 思源黑体 + 思源宋体分包 | OFL-1.1 | +10.3MB |
+| 霞鹜文楷分包 | 待确认 | +13.4MB |
+| Lucide 全量 SVG | ISC | 约 +1MB【估算】 |
+| reveal.js、Chart.js、KaTeX、Paged.js | MIT | 约 +1.3MB |
+| **全部可选项合计** | | **约 +37MB，总计约 45MB** |
+
+单个产物内联后的典型体积（未压缩）：纯报告约 0.4MB（一套风格 CSS + 组件层 + 两三个字体）；带 Plot 图表约 0.9MB；带 ECharts 约 1.5MB；带 Mermaid 精简版约 3.2MB。
+
+两个备选：
+- **备选 A（更轻、更有自己的长相）**：不拷 Basecoat，只拷 shadcn 的变量取值，组件全部自写。核心降到约 5.5MB，单个报告约 0.15MB。代价是按钮、表单、下拉这些 App 型组件也得自己做，且失去"跟着 shadcn 官方风格走"的省心。
+- **备选 B（模型最熟）**：拷 `@tailwindcss/browser`（280KB，MIT）+ Basecoat，允许模型自由写 Tailwind 工具类。代价是运行时编译（首屏闪烁、禁用 JS 即失效、官方不建议生产），且每个产物多 280KB。只建议用于"真实网站原型"这一类。
+
+### 12.7 "自建还是采用"在新约束下的结论
+
+约束和用户偏好把答案从"自建为主"推到了"**采用 Basecoat 作为 shadcn 基础 + 自建排版型组件层**"：
+
+- 支持采用的新理由：Basecoat 是 MIT、无依赖、已编译，拷入成本就是几个文件；它跟着 shadcn 官方风格更新，我们不用自己维护八套风格；模型对 shadcn 的变量和组件名已经很熟。
+- 自建层仍然必要：shadcn 生态是为 App 界面做的，前四类目标产物需要的组件它没有。
+- 仍然存在的风险：**shadcn 的默认长相正是当下最常见的"AI 生成感"**。用它当基础，辨识度就得靠三件事来补：选非默认的风格包（Vega 是基准脸，其余七套各有差异，本次只确认了名字和文件，没有看到实际效果）、换字体搭配、以及自建层里的版式。这一点建议在评测闭环里专门对照：Basecoat 默认 vs 换风格包 vs 备选 A。
+- Basecoat 的类名对模型是新的（训练数据少），需要在 skill 里给出速查表；它 2026-11-21 才发的 1.2.1，更新频繁，拷入后要锁版本并记录来源。
+
+### 12.8 拷入时的操作建议
+
+- 每个拷入项在 `vendor/` 下保留：原始文件、LICENSE 文本、一行来源记录（包名、版本、tarball 的校验和）。Apache-2.0 的项目另留 NOTICE。
+- 写一个更新脚本从 npm registry 拉指定版本的 tarball 并抽取文件（本次调研就是这么取数的）。这个脚本只在维护组件库时跑，使用方不需要 npm。
+- 进公司仓库前做一次许可证审计，重点是压缩包内打进去的第三方代码：Mermaid（elkjs、DOMPurify、cytoscape 等）、ECharts（zrender）、dom-to-pptx、Scalar、Redoc。本次没有做这项审计。
+
+### 12.9 本节未核实事项
+
+- 各库 LICENSE 原文与打包进去的第三方依赖的许可证。
+- Basecoat 各风格包的实际视觉效果；`*.cdn.min.css` 脱离 Tailwind 单独使用时是否所有组件都正常（只确认了它是编译产物且含变量与组件类）。
+- shadcn 生态各 registry 的许可证（Magic UI、ReUI、Kibo UI 的 MIT 来自二手文章；Origin UI、Aceternity、React Bits、Motion Primitives、Tailark、tweakcn 未确认）。
+- 霞鹜文楷、得意黑的字体许可证；OFL 字体子集化时的保留名要求；Fontshare 与各厂商中文字体的再分发条款。
+- 预编译 Tailwind 工具类、图标子集、按选择器裁剪 CSS、中文子集内嵌的体积，均为估算。
