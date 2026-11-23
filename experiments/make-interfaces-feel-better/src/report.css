@@ -1,0 +1,995 @@
+/*
+ * 报告组件层，叠加在 Basecoat（Maia）和 theme.css 之上。
+ * 这一版按 make-interfaces-feel-better 的条目改过，相关规则在注释里用【】标出。
+ */
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 30px;
+
+  --page-width: 1120px;
+  --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "WenQuanYi Zen Hei";
+
+  --sev-blocker: oklch(0.55 0.21 27);
+  --sev-high: oklch(0.7 0.17 55);
+  --sev-medium: oklch(0.82 0.13 88);
+  --sev-low: oklch(0.82 0.01 250);
+  --sev-blocker-fg: oklch(0.48 0.19 27);
+  --sev-high-fg: oklch(0.5 0.13 55);
+  --sev-medium-fg: oklch(0.47 0.09 88);
+  --sev-low-fg: var(--muted-foreground);
+
+  /* 【同心圆角】外圆角 = 内圆角 + 间距。概览：瓦片 12 + 外框内边距 8 = 20。 */
+  --tile-radius: 12px;
+  --shell-pad: 8px;
+  --shell-radius: calc(var(--tile-radius) + var(--shell-pad));
+  --card-radius: 16px;
+
+  /* 【用阴影表达层级】三层透明阴影：1px 描边环 + 贴地阴影 + 环境阴影。纯黑，不带色调。 */
+  --shadow-border:
+    0px 0px 0px 1px oklch(0 0 0 / 0.06),
+    0px 1px 2px -1px oklch(0 0 0 / 0.06),
+    0px 2px 4px 0px oklch(0 0 0 / 0.04);
+  --shadow-border-hover:
+    0px 0px 0px 1px oklch(0 0 0 / 0.08),
+    0px 1px 2px -1px oklch(0 0 0 / 0.08),
+    0px 2px 4px 0px oklch(0 0 0 / 0.06);
+
+  --ease-swap: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.dark {
+  --sev-blocker: oklch(0.65 0.2 27);
+  --sev-high: oklch(0.72 0.16 55);
+  --sev-medium: oklch(0.8 0.13 88);
+  --sev-low: oklch(0.45 0.01 250);
+  --sev-blocker-fg: oklch(0.75 0.16 27);
+  --sev-high-fg: oklch(0.8 0.13 55);
+  --sev-medium-fg: oklch(0.85 0.11 88);
+
+  /* 深色下只留一圈白色描边环 */
+  --shadow-border: 0 0 0 1px oklch(1 0 0 / 0.08);
+  --shadow-border-hover: 0 0 0 1px oklch(1 0 0 / 0.13);
+}
+
+/* 【字体平滑】只在根上设一次 */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans), var(--font-cjk), sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.55;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.r-mono {
+  font-family: var(--font-mono), var(--font-cjk), monospace;
+  font-size: 0.93em;
+  font-feature-settings: "zero" 0;
+}
+
+.r-muted {
+  color: var(--muted-foreground);
+}
+
+/* 【图标】一套 Lucide，全部 currentColor；紧邻的文字都是常规字重，所以统一 1.5px 描边；只用 16 / 20 两个原生网格尺寸。 */
+.r-icon {
+  display: inline-flex;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.r-icon > svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+}
+
+/* 【上下文图标动画】两个图标都留在 DOM 里叠放，按状态交叉淡入淡出：scale 0.25→1、opacity 0→1、blur 4px→0。
+   用过渡而不是关键帧，中途再点一次会从当前位置折返。 */
+.r-swap {
+  display: inline-grid;
+  flex: none;
+}
+
+.r-swap-item {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  opacity: 0;
+  scale: 0.25;
+  filter: blur(4px);
+  transition-property: opacity, filter, scale;
+  transition-duration: 300ms;
+  transition-timing-function: var(--ease-swap);
+}
+
+html:not(.dark) .r-swap-item[data-for="light"],
+html.dark .r-swap-item[data-for="dark"],
+.r-sort[data-dir="none"] .r-swap-item[data-for="none"],
+.r-sort[data-dir="asc"] .r-swap-item[data-for="asc"],
+.r-sort[data-dir="desc"] .r-swap-item[data-for="desc"] {
+  opacity: 1;
+  scale: 1;
+  filter: blur(0px);
+}
+
+.r-link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, currentColor 30%, transparent);
+  text-underline-offset: 3px;
+  border-radius: 2px;
+  transition-property: text-decoration-color;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+}
+
+.r-link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* 【最小点击区域】看得见的部分不够 40px 高时，用伪元素把可点范围补到 40px。 */
+.r-hit,
+.r-sort,
+.r-chip,
+.r-back {
+  position: relative;
+}
+
+.r-hit::after,
+.r-sort::after,
+.r-chip::after,
+.r-back::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  min-width: 40px;
+  translate: 0 -50%;
+}
+
+:where(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* 【按压反馈】按钮按下缩到 0.96，只过渡用到的属性。表格行和文字链接不加。 */
+.r-iconbtn,
+.r-sort,
+.r-chip,
+.r-back,
+.r-clear,
+#app .btn {
+  transition-property: scale, background-color, color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.r-iconbtn:active,
+.r-sort:active,
+.r-chip:active:not(:disabled),
+.r-back:active,
+.r-clear:active,
+#app .btn:active:not(:disabled) {
+  scale: 0.96;
+  translate: none;
+}
+
+/* 【用阴影表达层级】卡片、带边框的按钮用阴影环，不用实色边框 */
+.r-card {
+  border-radius: var(--card-radius);
+  background: var(--card);
+  box-shadow: var(--shadow-border);
+}
+
+#app .btn[data-variant="outline"] {
+  border-color: transparent;
+  background: var(--card);
+  box-shadow: var(--shadow-border);
+}
+
+#app .btn[data-variant="outline"]:hover {
+  box-shadow: var(--shadow-border-hover);
+}
+
+/* ---------- 页面骨架 ---------- */
+
+.r-page {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--space-5) var(--space-8);
+}
+
+.r-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border); /* 结构分隔线，保留边框 */
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-4);
+  min-width: 0;
+}
+
+.r-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.r-meta a {
+  color: var(--foreground);
+  border-radius: 2px;
+}
+
+.r-meta a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.r-iconbtn {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  margin-right: -10px; /* 图标的右缘对齐内容区右缘，而不是按钮的右缘 */
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.r-iconbtn .r-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.r-iconbtn:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.r-header {
+  padding: var(--space-6) 0 var(--space-5);
+}
+
+.r-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  margin-bottom: var(--space-4);
+  /* 【视觉对齐】图标一侧的内边距比文字一侧少 2px */
+  padding: 0 12px 0 10px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow-border);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-back:hover {
+  box-shadow: var(--shadow-border-hover);
+  color: var(--foreground);
+}
+
+.r-title {
+  font-family: var(--font-heading, var(--font-sans)), var(--font-cjk), sans-serif;
+  font-size: var(--text-xl);
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.2;
+  text-wrap: balance; /* 【标题均衡换行】 */
+}
+
+.r-title-sub {
+  margin-left: var(--space-3);
+  font-size: var(--text-md);
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.r-lede {
+  margin-top: var(--space-2);
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+.r-section {
+  margin-top: var(--space-7);
+}
+
+.r-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  min-height: 40px;
+  margin-bottom: var(--space-4);
+}
+
+.r-h2 {
+  font-family: var(--font-heading, var(--font-sans)), var(--font-cjk), sans-serif;
+  font-size: var(--text-md);
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-tracking);
+  text-wrap: balance;
+}
+
+.r-h2 small {
+  margin-left: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums; /* 【等宽数字】搜索和筛选时会变 */
+}
+
+/* ---------- 概览：外框 + 瓦片（同心圆角） ---------- */
+
+.r-overview {
+  display: grid;
+  grid-template-columns: repeat(var(--stats, 3), max-content) minmax(0, 1fr);
+  gap: var(--shell-pad);
+  padding: var(--shell-pad);
+  border-radius: var(--shell-radius);
+  background: var(--card);
+  box-shadow: var(--shadow-border);
+}
+
+.r-overview:has(> .r-stat:nth-child(2):nth-last-child(2)) {
+  --stats: 2;
+}
+
+.r-tile {
+  min-width: 128px;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--tile-radius);
+  background: var(--muted);
+}
+
+.r-stat-label {
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-stat-value {
+  margin-top: var(--space-1);
+  font-family: var(--font-heading, var(--font-sans)), var(--font-cjk), sans-serif;
+  font-size: var(--text-xl);
+  font-weight: var(--heading-weight);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.r-stat-value small {
+  margin-left: 4px;
+  font-size: var(--text-base);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted-foreground);
+}
+
+.r-stat[data-tone="blocker"] .r-stat-value {
+  color: var(--sev-blocker-fg);
+}
+
+.r-stat[data-tone="zero"] .r-stat-value {
+  color: var(--muted-foreground);
+}
+
+.r-dist .r-sevbar {
+  margin-top: 14px;
+}
+
+.r-sevbar {
+  display: flex;
+  gap: 2px;
+  height: 10px;
+}
+
+.r-sevbar > span {
+  min-width: 3px;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-sevbar > span:first-child {
+  border-start-start-radius: 999px;
+  border-end-start-radius: 999px;
+}
+
+.r-sevbar > span:last-child {
+  border-start-end-radius: 999px;
+  border-end-end-radius: 999px;
+}
+
+.r-sevbar > [data-sev="blocker"] { background: var(--sev-blocker); }
+.r-sevbar > [data-sev="high"] { background: var(--sev-high); }
+.r-sevbar > [data-sev="medium"] { background: var(--sev-medium); }
+.r-sevbar > [data-sev="low"] { background: var(--sev-low); }
+
+.r-sevbar[data-size="sm"] {
+  gap: 1px;
+  height: 6px;
+}
+
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-legend b,
+.r-chip b {
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.r-legend b {
+  color: var(--foreground);
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 999px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
+
+/* 按种类的条形列表 */
+
+.r-bars {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  gap: 10px var(--space-4);
+  align-items: center;
+  padding: var(--space-5);
+  font-size: var(--text-sm);
+}
+
+.r-bars-track {
+  height: 6px;
+}
+
+.r-bars-fill {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  border-radius: 999px;
+  background: var(--sev-low);
+}
+
+.r-bars-fill[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-bars-fill[data-sev="high"] { background: var(--sev-high); }
+.r-bars-fill[data-sev="medium"] { background: var(--sev-medium); }
+
+.r-bars-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.r-sev {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--sev-low-fg);
+}
+
+.r-sev[data-sev="blocker"] { color: var(--sev-blocker-fg); }
+.r-sev[data-sev="high"] { color: var(--sev-high-fg); }
+.r-sev[data-sev="medium"] { color: var(--sev-medium-fg); }
+
+/* ---------- 搜索与筛选 ---------- */
+
+.r-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+}
+
+.r-search {
+  position: relative;
+  width: 260px;
+}
+
+.r-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  translate: 0 -50%;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+/* 输入框保留真实边框（表单轮廓属于结构和可访问性），高度补到 40px */
+#app .r-search .input {
+  width: 100%;
+  height: 40px;
+  padding-left: 38px;
+  padding-right: 40px;
+  transition-property: border-color, box-shadow, background-color;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+/* 清除按钮：有内容时才出现，用和图标切换同一组数值入场和退场 */
+.r-clear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.r-clear .r-icon {
+  scale: 0.25;
+  filter: blur(4px);
+  transition-property: filter, scale;
+  transition-duration: 300ms;
+  transition-timing-function: var(--ease-swap);
+}
+
+.r-clear {
+  transition-property: opacity, visibility, scale, color;
+  transition-duration: 300ms, 300ms, 150ms, 150ms;
+  transition-timing-function: var(--ease-swap), var(--ease-swap), ease-out, ease-out;
+}
+
+.r-search[data-has-text] .r-clear {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.r-search[data-has-text] .r-clear .r-icon {
+  scale: 1;
+  filter: blur(0px);
+}
+
+.r-clear:hover {
+  color: var(--foreground);
+}
+
+.r-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.r-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow-border);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.r-chip:hover:not(:disabled) {
+  box-shadow: var(--shadow-border-hover);
+  color: var(--foreground);
+}
+
+/* 选中态有颜色这个静态提示，不依赖动画 */
+.r-chip[aria-pressed="true"] {
+  background: var(--primary);
+  box-shadow: none;
+  color: var(--primary-foreground);
+}
+
+.r-chip[aria-pressed="true"] .r-dot {
+  box-shadow: 0 0 0 1.5px var(--primary-foreground);
+}
+
+.r-chip:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---------- 表格 ---------- */
+
+.r-table-wrap {
+  position: relative;
+  overflow-x: auto;
+}
+
+.r-table {
+  width: 100%;
+  font-size: var(--text-base);
+}
+
+.r-table[hidden] {
+  display: none;
+}
+
+/* 行与行之间是分隔线，属于结构，保留边框 */
+#app .r-table tr {
+  border-color: var(--border);
+  transition-property: background-color;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+}
+
+.r-table th {
+  height: 44px;
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  text-align: left;
+}
+
+.r-table th,
+.r-table td {
+  padding-inline: var(--space-3);
+}
+
+.r-table th:first-child,
+.r-table td:first-child {
+  padding-left: var(--space-5);
+}
+
+.r-table th:last-child,
+.r-table td:last-child {
+  padding-right: var(--space-5);
+}
+
+.r-table td {
+  padding-block: var(--space-3);
+  vertical-align: middle;
+}
+
+.r-table .is-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums; /* 【等宽数字】数字列 */
+}
+
+.r-table .is-zero {
+  color: color-mix(in oklch, var(--muted-foreground) 55%, transparent);
+}
+
+.r-table tbody tr[data-href] {
+  cursor: pointer;
+}
+
+/* 【克制的动效】行悬停是高频操作：只有 100ms 的底色过渡，箭头只变色，不做入场动画 */
+.r-table tbody tr[data-href]:hover,
+.r-table tbody tr[data-href]:focus-within {
+  background: var(--muted);
+}
+
+.r-table tbody tr[data-href]:hover .r-app-name,
+.r-app-name:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.r-cell-go {
+  width: 1%;
+  color: color-mix(in oklch, var(--muted-foreground) 55%, transparent);
+  transition-property: color;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+}
+
+.r-cell-go .r-icon {
+  display: flex;
+}
+
+.r-table tbody tr[data-href]:hover .r-cell-go {
+  color: var(--foreground);
+}
+
+.r-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  /* 【视觉对齐】图标一侧少 2px；负外边距让文字和列内容左对齐 */
+  margin: 0 -6px 0 -8px;
+  padding: 0 6px 0 8px;
+  border-radius: 8px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.is-num .r-sort {
+  margin: 0 -6px 0 -8px;
+}
+
+.r-sort:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.r-sort:not([data-dir="none"]) {
+  color: var(--foreground);
+}
+
+.r-sort[data-dir="none"] .r-swap {
+  opacity: 0.55;
+}
+
+.r-app-name {
+  font-weight: 500;
+}
+
+.r-app-path {
+  display: block;
+  margin-top: 1px;
+  font-size: var(--text-xs);
+  color: var(--muted-foreground);
+}
+
+.r-cell-bar {
+  width: 22%;
+  min-width: 140px;
+}
+
+.r-cell-issue {
+  white-space: normal;
+}
+
+.r-issue-title {
+  font-weight: 500;
+}
+
+.r-issue-desc {
+  margin-top: 2px;
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+  text-wrap: pretty; /* 【正文避免孤字】 */
+}
+
+.r-loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+}
+
+.r-loc .r-icon {
+  opacity: 0.6;
+}
+
+.r-when {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.r-when-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+/* ---------- 空状态 ---------- */
+
+.r-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+  color: var(--muted-foreground);
+}
+
+.r-empty[hidden] {
+  display: none;
+}
+
+.r-empty > .r-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.r-empty strong {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.r-empty .btn {
+  margin-top: var(--space-2);
+}
+
+/* ---------- 无问题的子应用 ---------- */
+
+.r-clean {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-clean summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  list-style: none;
+  transition-property: color;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+}
+
+.r-clean summary::-webkit-details-marker {
+  display: none;
+}
+
+.r-clean summary:hover {
+  color: var(--foreground);
+}
+
+.r-clean summary .r-chevron {
+  transition-property: rotate;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.r-clean[open] summary .r-chevron {
+  rotate: 90deg;
+}
+
+.r-clean ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-1) var(--space-5);
+  padding: var(--space-1) 0 0 22px;
+}
+
+.r-footer {
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+/* ---------- 入场 ---------- */
+
+/* 【拆分并错开入场】只在首次打开时播放一次：标题、概览、表格、种类四块依次间隔 100ms。
+   一次性的序列用关键帧；列表和详情之间切换不重播。 */
+@keyframes r-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+}
+
+.is-entering .r-stagger {
+  animation: r-enter 400ms ease-out backwards;
+  animation-delay: calc(var(--i, 0) * 100ms);
+}
+
+/* ---------- 窄屏、减少动效与打印 ---------- */
+
+@media (max-width: 820px) {
+  .r-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .r-tile {
+    min-width: 0;
+  }
+
+  .r-dist {
+    grid-column: 1 / -1;
+  }
+
+  .r-hide-narrow {
+    display: none;
+  }
+
+  .r-search,
+  .r-tools {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation: none !important;
+  }
+}
+
+@media print {
+  .r-search,
+  .r-chips,
+  .r-iconbtn,
+  .r-cell-go {
+    display: none !important;
+  }
+
+  .r-stagger {
+    animation: none !important;
+  }
+
+  .r-page {
+    max-width: none;
+    padding: 0;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
