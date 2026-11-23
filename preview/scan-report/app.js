@@ -107,7 +107,6 @@
           <th scope="col" class="is-num" ${ariaSort('list', 'total')}>${sortBtn('list', 'total', '问题数')}</th>
           <th scope="col" class="r-cell-bar r-hide-narrow">严重程度分布</th>
           <th scope="col" class="is-num" ${ariaSort('list', 'fresh')}>${sortBtn('list', 'fresh', '本次新增')}</th>
-          <th scope="col"><span class="sr-only">查看</span></th>
         </tr>
       </thead>
       <tbody>
@@ -119,7 +118,6 @@
           <td class="is-num">${a.total}</td>
           <td class="r-cell-bar r-hide-narrow">${sevbar(a.sev, { size: 'sm', scale: a.total / maxAppTotal })}</td>
           ${a.fresh ? `<td class="is-num">+${a.fresh}</td>` : '<td class="is-num is-zero">0</td>'}
-          <td class="is-num">${icon('chevron-right', 'r-row-go')}</td>
         </tr>`).join('')}
       </tbody>
     </table>`;

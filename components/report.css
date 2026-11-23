@@ -511,9 +511,9 @@ body {
   padding-inline: var(--space-3);
 }
 
-.r-table th:first-child,
-.r-table td:first-child {
-  padding-left: var(--space-1);
+.r-table th:last-child,
+.r-table td:last-child {
+  padding-right: var(--space-4);
 }
 
 .r-table td {
@@ -532,16 +532,19 @@ body {
 
 .r-table tbody tr[data-href] {
   cursor: pointer;
+  transition: background-color 120ms ease;
 }
 
-.r-table tbody tr[data-href]:hover .r-row-go {
-  color: var(--foreground);
-  translate: 2px 0;
+/* 可点击的行：悬停或键盘聚焦时整行变灰，标题加下划线。不用箭头图标。 */
+.r-table tbody tr[data-href]:hover,
+.r-table tbody tr[data-href]:focus-within {
+  background: var(--muted);
 }
 
-.r-row-go {
-  color: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
-  transition: translate 120ms ease, color 120ms ease;
+.r-table tbody tr[data-href]:hover .r-app-name,
+.r-app-name:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .r-sort {
@@ -737,8 +740,7 @@ body {
 
 @media print {
   .r-toolbar,
-  .r-topbar button,
-  .r-row-go {
+  .r-topbar button {
     display: none !important;
   }
 
