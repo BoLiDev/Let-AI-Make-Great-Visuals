@@ -4,6 +4,6 @@ export const looks = [
   { id: 'ink', name: 'Ink 工程文档', note: '直角、墨色、细线。IBM Plex Sans + Plex Mono。', basecoat: 'sera', fonts: ['ibm-plex-sans', 'ibm-plex-mono'], theme: 'themes/ink.css' },
   { id: 'slate', name: 'Slate 蓝灰', note: '带蓝调的中性色，概览放在面板里。Hanken Grotesk + JetBrains Mono。', basecoat: 'nova', fonts: ['hanken-grotesk', 'jetbrains-mono'], theme: 'themes/slate.css' },
   { id: 'graphite', name: 'Graphite 控制台', note: '默认深色，等宽标题，琥珀色强调。Instrument Sans + JetBrains Mono。', basecoat: 'lyra', fonts: ['instrument-sans', 'jetbrains-mono'], theme: 'themes/graphite.css', defaultDark: true },
-  { id: 'moss', name: 'Moss 柔和', note: '绿调暖灰，大圆角。Instrument Sans + Geist Mono。', basecoat: 'maia', fonts: ['instrument-sans', 'geist-mono'], theme: 'themes/moss.css' },
-  { id: 'onyx', name: 'Onyx 黑白灰', note: 'Moss 的形状，黑白灰配色，绿色表示向好、浅红表示风险。默认深色。', basecoat: 'maia', fonts: ['instrument-sans', 'geist-mono'], theme: 'themes/onyx.css', defaultDark: true },
+  { id: 'moss', name: 'Moss 柔和（默认）', note: '绿调暖灰，大圆角。Instrument Sans + Geist Mono。扫描报告的默认外观。', default: true, basecoat: 'maia', fonts: ['instrument-sans', 'geist-mono'], theme: 'themes/moss.css' },
+  { id: 'onyx', name: 'Onyx 黑白灰', note: 'Moss 的形状，黑白灰配色，绿色表示向好、浅红表示风险。默认深色。留作有涨跌语义的场景使用。', basecoat: 'maia', fonts: ['instrument-sans', 'geist-mono'], theme: 'themes/onyx.css', defaultDark: true },
 ];

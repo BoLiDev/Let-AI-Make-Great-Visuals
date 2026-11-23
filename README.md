@@ -16,13 +16,14 @@
 | B Ink 工程文档 | Sera | IBM Plex Sans / Mono | 直角、墨色、粗顶线 |
 | C Slate 蓝灰 | Nova | Hanken Grotesk / JetBrains Mono | 带蓝调的中性色，概览放在面板里 |
 | D Graphite 控制台 | Lyra | Instrument Sans / JetBrains Mono | 默认深色，琥珀色强调 |
-| E Moss 柔和 | Maia | Instrument Sans / Geist Mono | 绿调暖灰，大圆角 |
+| E Moss 柔和（已选为默认） | Maia | Instrument Sans / Geist Mono | 绿调暖灰，大圆角 |
 | F Onyx 黑白灰 | Maia | Instrument Sans / Geist Mono | Moss 的形状，黑白灰配色，绿色表示向好、浅红表示风险，默认深色 |
 
 重新生成：`node tools/build-preview.mjs`（只用 Node 标准库）。截图和基础检查：`node tools/shot.mjs <html> <输出前缀>`（需要 Playwright）。
 
 目录：
 
+- `docs/preferences.md`：评审沉淀下来的审美偏好
 - `vendor/`：拷入的第三方文件，见 [`vendor/README.md`](vendor/README.md)
 - `components/report.css`：报告组件层，叠加在 Basecoat 之上
 - `themes/`：外观主题，只覆盖变量
