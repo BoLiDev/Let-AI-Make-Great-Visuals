@@ -1,0 +1,17 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "app",
+  "shape": "app screen",
+  "theme": "almanac",
+  "axes": "mid/grotesk-sans/chromatic-magenta",
+  "nav": "top bar: repo meta row and one mode switch",
+  "signature": "the register of sub-apps on the pale sheet",
+  "waived": [
+   "49b"
+  ],
+  "prompt": "code-scan report for a monorepo",
+  "date": "2026-11-23"
+ }
+]
