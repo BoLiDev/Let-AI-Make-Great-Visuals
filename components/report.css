@@ -325,13 +325,14 @@ body {
 
 .r-sevbar {
   display: flex;
-  gap: 2px;
   height: 10px;
+  overflow: hidden;
+  border-radius: var(--bar-radius);
 }
 
+/* 各段首尾相接，圆角只在整条的两端 */
 .r-sevbar > span {
   min-width: 3px;
-  border-radius: var(--bar-radius);
   background: var(--sev-low);
 }
 
@@ -342,7 +343,6 @@ body {
 
 .r-sevbar[data-size="sm"] {
   height: 6px;
-  gap: 1px;
 }
 
 .r-legend {
