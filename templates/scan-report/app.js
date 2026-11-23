@@ -50,7 +50,7 @@
 
   const state = {
     list: { q: '', sort: 'blocker', dir: 'desc' },
-    detail: { type: '', sev: '', sort: 'severity', dir: 'asc' },
+    detail: { q: '', sort: 'severity', dir: 'asc' },
   };
 
   function sevbar(counts, { size, scale = 1 } = {}) {
@@ -210,14 +210,15 @@
   /* ---------- 详情页 ---------- */
 
   function detailTable(app) {
-    const { type, sev, sort, dir } = state.detail;
+    const { q, sort, dir } = state.detail;
+    const kw = q.trim().toLowerCase();
     const key = sort === 'severity' ? (i) => SEV_RANK[i.severity] * 100000 + (i.age ?? 99999) : (i) => i.age ?? 99999;
     const rows = app.issues
-      .filter((i) => (!type || i.type === type) && (!sev || i.severity === sev))
+      .filter((i) => !kw || [TYPE_BY_ID[i.type].label, SEV_BY_ID[i.severity].label, i.message, i.file, i.author].some((v) => v && String(v).toLowerCase().includes(kw)))
       .sort((a, b) => (dir === 'asc' ? key(a) - key(b) : key(b) - key(a)));
     if (!rows.length) {
-      return `<div class="r-empty">${icon('search-x')}<strong>没有符合条件的问题</strong><span>当前筛选条件下没有结果。</span>
-        <button type="button" class="btn" data-variant="outline" data-size="sm" data-action="reset-detail">清除筛选</button></div>`;
+      return `<div class="r-empty">${icon('search-x')}<strong>没有匹配的问题</strong><span>换一个关键词试试。</span>
+        <button type="button" class="btn" data-variant="outline" data-size="sm" data-action="reset-detail">清除搜索</button></div>`;
     }
     const prefix = app.path ? app.path.replace(/\/?$/, '/') : '';
     const loc = (i) => {
@@ -229,8 +230,7 @@
     };
     const when = (i) => {
       if (!i.introducedAt) return '';
-      const sub = [ago(i.age), i.author && esc(i.author), i.mr && `<span class="r-mono">${esc(i.mr)}</span>`].filter(Boolean);
-      return `${esc(i.introducedAt)}${sub.length ? `<span class="r-when-sub">${sub.map((x) => `<span>${x}</span>`).join('')}</span>` : ''}`;
+      return `${esc(i.introducedAt)}${i.author ? `<span class="r-when-sub">${esc(i.author)}</span>` : ''}`;
     };
     return `
     <table class="table r-table">
@@ -255,46 +255,41 @@
         </tr>`).join('')}
       </tbody>
     </table>
-    ${rows.length < app.total ? `<p class="r-count-note">显示 ${rows.length} / ${app.total} 个问题</p>` : ''}`;
-  }
-
-  function detailFilters(app) {
-    const d = state.detail;
-    const types = R.types.map((t) => ({ ...t, n: app.issues.filter((i) => i.type === t.id).length })).filter((t) => t.n);
-    const chip = (id, label, n) => `<button type="button" class="btn" data-size="sm" data-variant="${d.type === id ? 'primary' : 'outline'}" aria-pressed="${d.type === id}" data-type="${esc(id)}">${esc(label)}<span class="r-chip-count">${n}</span></button>`;
-    return `
-      <div class="r-chips" role="group" aria-label="按种类筛选">
-        ${chip('', '全部', app.total)}${types.map((t) => chip(t.id, t.label, t.n)).join('')}
-      </div>
-      <select class="select" aria-label="严重程度" data-input="detail-sev">
-        <option value="">全部严重程度</option>
-        ${SEV.filter((x) => app.sev[x.id]).map((x) => `<option value="${x.id}" ${x.id === d.sev ? 'selected' : ''}>${x.label}（${app.sev[x.id]}）</option>`).join('')}
-      </select>`;
+`;
   }
 
   function renderDetail(app) {
-    const submeta = [
-      app.team && `<span>${icon('users')}${esc(app.team)}</span>`,
-      app.url && `<span>${link(app.url, '在代码仓库中打开目录')}${icon('external-link')}</span>`,
-    ].filter(Boolean).join('');
+    const typeCount = new Set(app.issues.map((i) => i.type)).size;
     root.innerHTML = `
     ${topbar()}
     <div class="r-header">
       <nav class="r-eyebrow" aria-label="面包屑">
         <a href="#/">${esc(R.title || '代码扫描报告')}</a>${icon('chevron-right')}<span>${esc(app.name)}</span>
       </nav>
-      <h1 class="r-title">${esc(app.name)}${app.path ? `<span class="r-title-sub r-mono">${esc(app.path)}</span>` : ''}</h1>
+      <h1 class="r-title">${esc(app.name)}${app.path ? `<span class="r-title-sub r-mono">${link(app.url, esc(app.path))}</span>` : ''}</h1>
       <p class="r-lead">共 <strong>${app.total} 个</strong>问题${app.sev.blocker ? `，其中 <span class="r-sev-text">${app.sev.blocker} 个阻断级</span>需要在下次发布前修复` : '，没有阻断级问题'}。</p>
-      ${submeta ? `<div class="r-submeta">${submeta}</div>` : ''}
     </div>
 
-    <section class="r-overview" aria-label="概览">
-      <div>${sevbar(app.sev)}${legend(app.sev, false)}</div>
-      ${typeBars(app.issues)}
+    <section class="r-overview" data-layout="stats" aria-label="概览">
+      <div class="r-stats">
+        <div class="r-stat">
+          <div class="r-stat-label">问题总数</div>
+          <div class="r-stat-value">${app.total}</div>
+        </div>
+        <div class="r-stat">
+          <div class="r-stat-label">问题种类</div>
+          <div class="r-stat-value">${typeCount}</div>
+        </div>
+      </div>
+      <div>${sevbar(app.sev)}${legend(app.sev, true)}</div>
     </section>
 
     <section class="r-section">
-      <div class="r-section-head" id="detail-filters">${detailFilters(app)}</div>
+      <div class="r-section-head">
+        <h2 class="r-h2">问题列表<small>${app.total} 个</small></h2>
+        <label class="r-search">${icon('search')}<span class="sr-only">搜索问题</span>
+          <input class="input" type="search" placeholder="搜索问题" value="${esc(state.detail.q)}" data-input="detail-q"></label>
+      </div>
       <div class="r-table-wrap" id="detail-table">${detailTable(app)}</div>
     </section>`;
   }
@@ -319,23 +314,19 @@
   let lastApp = null;
   window.addEventListener('hashchange', () => {
     const app = currentApp();
-    if (app && app.id !== lastApp) state.detail = { type: '', sev: '', sort: 'severity', dir: 'asc' };
+    if (app && app.id !== lastApp) state.detail = { q: '', sort: 'severity', dir: 'asc' };
     lastApp = app ? app.id : null;
     render();
     window.scrollTo(0, 0);
   });
 
   const refreshList = () => (document.getElementById('list-table').innerHTML = listTable());
-  function refreshDetail(withFilters) {
-    const app = currentApp();
-    if (withFilters) document.getElementById('detail-filters').innerHTML = detailFilters(app);
-    document.getElementById('detail-table').innerHTML = detailTable(app);
-  }
+  const refreshDetail = () => (document.getElementById('detail-table').innerHTML = detailTable(currentApp()));
 
   root.addEventListener('input', (e) => {
     const k = e.target.dataset.input;
     if (k === 'list-q') { state.list.q = e.target.value; refreshList(); }
-    if (k === 'detail-sev') { state.detail.sev = e.target.value; refreshDetail(); }
+    if (k === 'detail-q') { state.detail.q = e.target.value; refreshDetail(); }
   });
 
   root.addEventListener('click', (e) => {
@@ -348,8 +339,6 @@
       scope === 'list' ? refreshList() : refreshDetail();
       return;
     }
-    const typeEl = e.target.closest('[data-type]');
-    if (typeEl) { state.detail.type = typeEl.dataset.type; refreshDetail(true); return; }
     const action = e.target.closest('[data-action]');
     if (action) {
       const a = action.dataset.action;
@@ -359,7 +348,7 @@
         render();
       }
       if (a === 'reset-list') { state.list.q = ''; render(); }
-      if (a === 'reset-detail') { Object.assign(state.detail, { type: '', sev: '' }); refreshDetail(true); }
+      if (a === 'reset-detail') { state.detail.q = ''; render(); }
       return;
     }
     const row = e.target.closest('tr[data-href]');
