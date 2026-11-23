@@ -22,7 +22,10 @@ for (const [i, hash] of hashes.entries()) {
   const check = await page.evaluate(() => {
     const de = document.documentElement;
     const overflow = de.scrollWidth > de.clientWidth ? [...document.querySelectorAll('body *')].filter((el) => el.getBoundingClientRect().right > de.clientWidth + 1 && !el.closest('#look-switcher')).slice(0, 5).map((el) => el.className || el.tagName) : [];
-    return { scrollW: de.scrollWidth, clientW: de.clientWidth, overflow, fonts: [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family) };
+    // AI 味字符检查：间隔号、项目符号、emoji 不应出现在页面文字里。
+    const text = document.getElementById('app').innerText;
+    const slop = [...new Set(text.match(/[·•‧∙⋅]|\p{Extended_Pictographic}/gu) || [])];
+    return { scrollW: de.scrollWidth, clientW: de.clientWidth, overflow, slopChars: slop, fonts: [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family) };
   });
   const out = `${prefix}-${i === 0 ? 'list' : 'detail'}.png`;
   await page.screenshot({ path: out, fullPage: has('full') });

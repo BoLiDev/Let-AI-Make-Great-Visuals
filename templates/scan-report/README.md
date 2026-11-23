@@ -28,7 +28,7 @@ node tools/build-report.mjs data.json -o report.html
   "repo": { "name": "platform/web-monorepo", "url": "https://..." }, // 可选
   "branch": "main",                     // 可选
   "commit": "a41f9c2e",                 // 可选
-  "scannedAt": "2026-11-20 03:00",      // 可选；用于计算"N 天前"，以 YYYY-MM-DD 开头
+  "scannedAt": "2026-11-20",            // 可选；不显示在页面上，只用于计算"N 天前"，YYYY-MM-DD
   "footnote": "扫描范围：apps/*",        // 可选，页脚说明
 
   "types": [                            // 必填：问题种类

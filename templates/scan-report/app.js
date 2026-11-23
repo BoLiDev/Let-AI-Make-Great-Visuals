@@ -98,7 +98,6 @@
         ${repo.name ? `<span>${icon('folder-git-2')}${link(repo.url, `<strong class="r-mono">${esc(repo.name)}</strong>`, '')}</span>` : ''}
         ${R.branch ? `<span>${icon('git-branch')}<span class="r-mono">${esc(R.branch)}</span></span>` : ''}
         ${R.commit ? `<span>${icon('git-commit-horizontal')}<span class="r-mono">${esc(R.commit)}</span></span>` : ''}
-        ${R.scannedAt ? `<span>${icon('clock')}扫描于 <span class="r-num">${esc(R.scannedAt)}</span></span>` : ''}
       </div>
       <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" data-action="theme" aria-label="${tip}" title="${tip}">${icon(dark ? 'sun' : 'moon')}</button>
     </header>`;
@@ -230,8 +229,8 @@
     };
     const when = (i) => {
       if (!i.introducedAt) return '';
-      const sub = [ago(i.age), i.author && esc(i.author), i.mr && `<span class="r-mono">${esc(i.mr)}</span>`].filter(Boolean).join(' · ');
-      return `${esc(i.introducedAt)}${sub ? `<span class="r-when-sub">${sub}</span>` : ''}`;
+      const sub = [ago(i.age), i.author && esc(i.author), i.mr && `<span class="r-mono">${esc(i.mr)}</span>`].filter(Boolean);
+      return `${esc(i.introducedAt)}${sub.length ? `<span class="r-when-sub">${sub.map((x) => `<span>${x}</span>`).join('')}</span>` : ''}`;
     };
     return `
     <table class="table r-table">
@@ -314,7 +313,7 @@
     if (app) renderDetail(app);
     else renderList();
     const title = R.title || '代码扫描报告';
-    document.title = app ? `${app.name} · ${title}` : title;
+    document.title = app ? `${app.name} | ${title}` : title;
   }
 
   let lastApp = null;

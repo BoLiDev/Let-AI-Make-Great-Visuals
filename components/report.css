@@ -601,7 +601,8 @@ body {
 }
 
 .r-when-sub {
-  display: block;
+  display: flex;
+  gap: var(--space-2);
   margin-top: 2px;
   font-size: var(--text-sm);
   color: var(--muted-foreground);
