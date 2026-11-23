@@ -203,26 +203,10 @@ body {
   color: var(--muted-foreground);
 }
 
-.r-lead {
-  max-width: 46em;
-  margin-top: var(--space-3);
-  font-size: var(--text-md);
-  line-height: 1.7;
-  color: var(--muted-foreground);
-  text-wrap: pretty;
-}
-
-.r-lead strong {
-  color: var(--foreground);
-  font-weight: 600;
-}
 
 
 
-.r-lead .r-sev-text {
-  color: var(--sev-blocker-fg);
-  font-weight: 600;
-}
+
 
 .r-section {
   margin-top: var(--space-7);
@@ -297,6 +281,14 @@ body {
 
 
 
+
+.r-stat[data-tone="blocker"] .r-stat-value {
+  color: var(--sev-blocker-fg);
+}
+
+.r-stat[data-tone="zero"] .r-stat-value {
+  color: var(--muted-foreground);
+}
 
 /* 左侧只有几个数字时，让数字列按内容收窄，分布条占满其余宽度 */
 .r-overview[data-layout="stats"] {

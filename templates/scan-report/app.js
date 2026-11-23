@@ -110,15 +110,6 @@
 
   /* ---------- 列表页 ---------- */
 
-  function listLead() {
-    if (!total) return `共扫描 ${apps.length} 个子应用，<strong>未发现问题</strong>。`;
-    const blockerApps = dirty.filter((a) => a.sev.blocker).length;
-    const head = `${apps.length} 个子应用中有 <strong>${dirty.length} 个</strong>存在问题，共 <strong>${total} 个</strong>。`;
-    return totals.blocker
-      ? `${head}其中 <span class="r-sev-text">${totals.blocker} 个阻断级问题</span>分布在 ${blockerApps} 个子应用，需要在下次发布前修复。`
-      : `${head}没有阻断级问题。`;
-  }
-
   function listTable() {
     const { q, sort, dir } = state.list;
     const kw = q.trim().toLowerCase();
@@ -127,7 +118,7 @@
       .filter((a) => !kw || [a.id, a.name, a.path, a.team].some((v) => v && String(v).toLowerCase().includes(kw)))
       .sort((a, b) => (dir === 'asc' ? key(a) - key(b) : key(b) - key(a)));
     if (!rows.length) {
-      return `<div class="r-empty">${icon('search-x')}<strong>没有匹配的子应用</strong><span>换一个关键词试试。</span>
+      return `<div class="r-empty">${icon('search-x')}<strong>没有匹配的子应用</strong>
         <button type="button" class="btn" data-variant="outline" data-size="sm" data-action="reset-list">清除搜索</button></div>`;
     }
     return `
@@ -154,29 +145,31 @@
     </table>`;
   }
 
+  // 概览里的一个数字。阻断数不为 0 时用红色。
+  const stat = (label, value, tone) => `
+        <div class="r-stat" ${tone ? `data-tone="${tone}"` : ''}>
+          <div class="r-stat-label">${label}</div>
+          <div class="r-stat-value">${value}</div>
+        </div>`;
+
   function renderList() {
     const header = `
     ${topbar()}
     <div class="r-header">
       <h1 class="r-title">${esc(R.title || '代码扫描报告')}</h1>
-      <p class="r-lead">${listLead()}</p>
     </div>`;
     if (!total) {
-      root.innerHTML = header;
+      root.innerHTML = `${header}
+      <div class="r-empty">${icon('circle-check')}<strong>未发现问题</strong><span>已扫描 ${apps.length} 个子应用</span></div>`;
       return;
     }
     root.innerHTML = `
     ${header}
     <section class="r-overview" data-layout="stats" aria-label="概览">
       <div class="r-stats">
-        <div class="r-stat">
-          <div class="r-stat-label">问题总数</div>
-          <div class="r-stat-value">${total}</div>
-        </div>
-        <div class="r-stat">
-          <div class="r-stat-label">受影响子应用</div>
-          <div class="r-stat-value">${dirty.length}<small>/ ${apps.length}</small></div>
-        </div>
+        ${stat('问题总数', total)}
+        ${stat('阻断', totals.blocker, totals.blocker ? 'blocker' : 'zero')}
+        ${stat('受影响子应用', `${dirty.length}<small>/ ${apps.length}</small>`)}
       </div>
       <div>${sevbar(totals)}${legend()}</div>
     </section>
@@ -212,7 +205,7 @@
       .filter((i) => !kw || [TYPE_BY_ID[i.type].label, SEV_BY_ID[i.severity].label, i.message, i.file, i.author].some((v) => v && String(v).toLowerCase().includes(kw)))
       .sort((a, b) => (dir === 'asc' ? key(a) - key(b) : key(b) - key(a)));
     if (!rows.length) {
-      return `<div class="r-empty">${icon('search-x')}<strong>没有匹配的问题</strong><span>换一个关键词试试。</span>
+      return `<div class="r-empty">${icon('search-x')}<strong>没有匹配的问题</strong>
         <button type="button" class="btn" data-variant="outline" data-size="sm" data-action="reset-detail">清除搜索</button></div>`;
     }
     const prefix = app.path ? app.path.replace(/\/?$/, '/') : '';
@@ -254,7 +247,6 @@
   }
 
   function renderDetail(app) {
-    const typeCount = new Set(app.issues.map((i) => i.type)).size;
     root.innerHTML = `
     ${topbar()}
     <div class="r-header">
@@ -262,19 +254,12 @@
         <a href="#/">${esc(R.title || '代码扫描报告')}</a>${icon('chevron-right')}<span>${esc(app.name)}</span>
       </nav>
       <h1 class="r-title">${esc(app.name)}${app.path ? `<span class="r-title-sub r-mono">${link(app.url, esc(app.path))}</span>` : ''}</h1>
-      <p class="r-lead">共 <strong>${app.total} 个</strong>问题${app.sev.blocker ? `，其中 <span class="r-sev-text">${app.sev.blocker} 个阻断级</span>需要在下次发布前修复` : '，没有阻断级问题'}。</p>
     </div>
 
     <section class="r-overview" data-layout="stats" aria-label="概览">
       <div class="r-stats">
-        <div class="r-stat">
-          <div class="r-stat-label">问题总数</div>
-          <div class="r-stat-value">${app.total}</div>
-        </div>
-        <div class="r-stat">
-          <div class="r-stat-label">问题种类</div>
-          <div class="r-stat-value">${typeCount}</div>
-        </div>
+        ${stat('问题总数', app.total)}
+        ${stat('阻断', app.sev.blocker, app.sev.blocker ? 'blocker' : 'zero')}
       </div>
       <div>${sevbar(app.sev)}${legend()}</div>
     </section>
