@@ -334,6 +334,33 @@ body {
 
 
 
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
+
 /* 按种类的条形列表 */
 
 .r-bars {

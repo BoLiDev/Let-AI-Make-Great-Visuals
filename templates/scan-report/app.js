@@ -63,6 +63,9 @@
 
   const sevLabel = (id) => `<span class="r-sev" data-sev="${id}">${icon(SEV_BY_ID[id].icon)}${SEV_BY_ID[id].label}</span>`;
 
+  // 图例只说明颜色代表什么，不带数字；数字在悬停分布条的各段时显示。
+  const legend = () => `<ul class="r-legend" aria-hidden="true">${SEV.map((x) => `<li><span class="r-dot" data-sev="${x.id}"></span>${x.label}</li>`).join('')}</ul>`;
+
   function ago(days) {
     if (days === null) return '';
     if (days <= 0) return '今天';
@@ -175,7 +178,7 @@
           <div class="r-stat-value">${dirty.length}<small>/ ${apps.length}</small></div>
         </div>
       </div>
-      ${sevbar(totals)}
+      <div>${sevbar(totals)}${legend()}</div>
     </section>
 
     <section class="r-section">
@@ -273,7 +276,7 @@
           <div class="r-stat-value">${typeCount}</div>
         </div>
       </div>
-      ${sevbar(app.sev)}
+      <div>${sevbar(app.sev)}${legend()}</div>
     </section>
 
     <section class="r-section">

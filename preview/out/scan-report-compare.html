@@ -345,6 +345,33 @@ body {
 
 
 
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
+
 /* 按种类的条形列表 */
 
 .r-bars {
@@ -1024,6 +1051,33 @@ body {
 
 
 
+
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
 
 /* 按种类的条形列表 */
 
@@ -1754,6 +1808,33 @@ body {
 
 
 
+
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
 
 /* 按种类的条形列表 */
 
@@ -2490,6 +2571,33 @@ body {
 
 
 
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
+
 /* 按种类的条形列表 */
 
 .r-bars {
@@ -3221,6 +3329,33 @@ body {
 
 
 
+
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
 
 /* 按种类的条形列表 */
 
@@ -3958,6 +4093,33 @@ body {
 
 
 
+.r-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.r-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.r-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--sev-low);
+}
+
+.r-dot[data-sev="blocker"] { background: var(--sev-blocker); }
+.r-dot[data-sev="high"] { background: var(--sev-high); }
+.r-dot[data-sev="medium"] { background: var(--sev-medium); }
+
 /* 按种类的条形列表 */
 
 .r-bars {
@@ -4442,6 +4604,9 @@ body {
 
   const sevLabel = (id) => `<span class="r-sev" data-sev="${id}">${icon(SEV_BY_ID[id].icon)}${SEV_BY_ID[id].label}</span>`;
 
+  // 图例只说明颜色代表什么，不带数字；数字在悬停分布条的各段时显示。
+  const legend = () => `<ul class="r-legend" aria-hidden="true">${SEV.map((x) => `<li><span class="r-dot" data-sev="${x.id}"></span>${x.label}</li>`).join('')}</ul>`;
+
   function ago(days) {
     if (days === null) return '';
     if (days <= 0) return '今天';
@@ -4554,7 +4719,7 @@ body {
           <div class="r-stat-value">${dirty.length}<small>/ ${apps.length}</small></div>
         </div>
       </div>
-      ${sevbar(totals)}
+      <div>${sevbar(totals)}${legend()}</div>
     </section>
 
     <section class="r-section">
@@ -4652,7 +4817,7 @@ body {
           <div class="r-stat-value">${typeCount}</div>
         </div>
       </div>
-      ${sevbar(app.sev)}
+      <div>${sevbar(app.sev)}${legend()}</div>
     </section>
 
     <section class="r-section">
