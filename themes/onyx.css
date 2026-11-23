@@ -1,0 +1,77 @@
+/* Onyx：黑白灰。形状沿用 Moss（大圆角、概览面板），颜色只用中性灰，绿色表示向好，浅红表示风险。默认深色。配 Basecoat 的 Maia 风格。 */
+:root {
+  --font-sans: "Instrument Sans";
+  --font-mono: "Geist Mono";
+  --radius: 12px;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.15 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.15 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0 0);
+  --secondary-foreground: oklch(0.15 0 0);
+  --muted: oklch(0.965 0 0);
+  --muted-foreground: oklch(0.47 0 0);
+  --accent: oklch(0.945 0 0);
+  --accent-foreground: oklch(0.15 0 0);
+  --border: oklch(0.91 0 0);
+  --input: oklch(0.86 0 0);
+  --ring: oklch(0.15 0 0);
+  --link: var(--foreground);
+
+  /* 严重程度：红色只留给最要紧的两级，其余用灰阶 */
+  --sev-blocker: oklch(0.62 0.21 22);
+  --sev-high: oklch(0.8 0.1 22);
+  --sev-medium: oklch(0.72 0 0);
+  --sev-low: oklch(0.88 0 0);
+  --sev-blocker-fg: oklch(0.53 0.2 22);
+  --sev-high-fg: oklch(0.5 0.13 22);
+  --sev-medium-fg: oklch(0.4 0 0);
+  --sev-low-fg: var(--muted-foreground);
+  --positive-fg: oklch(0.52 0.15 150);
+
+  --heading-weight: 600;
+  --heading-tracking: -0.02em;
+  --overview-bg: var(--muted);
+  --overview-pad-x: var(--space-5);
+  --overview-radius: 16px;
+  --rule: 0px solid transparent;
+  --rule-strong: 0px solid transparent;
+  --bar-radius: 999px;
+}
+
+.r-table-wrap {
+  border-top: 1px solid var(--border);
+}
+
+.dark {
+  --background: oklch(0.12 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.17 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.17 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.97 0 0);
+  --primary-foreground: oklch(0.12 0 0);
+  --secondary: oklch(0.21 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.175 0 0);
+  --muted-foreground: oklch(0.68 0 0);
+  --accent: oklch(0.24 0 0);
+  --accent-foreground: oklch(0.97 0 0);
+  --border: oklch(0.25 0 0);
+  --input: oklch(0.32 0 0);
+  --ring: oklch(0.97 0 0);
+
+  --sev-blocker: oklch(0.7 0.19 22);
+  --sev-high: oklch(0.84 0.08 22);
+  --sev-medium: oklch(0.6 0 0);
+  --sev-low: oklch(0.36 0 0);
+  --sev-blocker-fg: oklch(0.74 0.17 22);
+  --sev-high-fg: oklch(0.86 0.07 22);
+  --sev-medium-fg: oklch(0.8 0 0);
+  --positive-fg: oklch(0.78 0.18 150);
+}

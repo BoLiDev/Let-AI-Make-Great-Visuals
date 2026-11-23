@@ -8,7 +8,7 @@
 
 ## 外观预览
 
-同一份报告（列表页 + 子应用详情页），套用五套外观。用浏览器打开 [`preview/out/scan-report-compare.html`](preview/out/scan-report-compare.html)，底部的切换条可以在外观之间切换；每套外观也有独立文件，截图在 [`preview/screenshots/`](preview/screenshots/)。
+同一份报告（列表页 + 子应用详情页），套用六套外观。用浏览器打开 [`preview/out/scan-report-compare.html`](preview/out/scan-report-compare.html)，底部的切换条可以在外观之间切换；每套外观也有独立文件，截图在 [`preview/screenshots/`](preview/screenshots/)。
 
 | 外观 | Basecoat 风格 | 字体 | 特点 |
 |---|---|---|---|
@@ -17,6 +17,7 @@
 | C Slate 蓝灰 | Nova | Hanken Grotesk / JetBrains Mono | 带蓝调的中性色，概览放在面板里 |
 | D Graphite 控制台 | Lyra | Instrument Sans / JetBrains Mono | 默认深色，琥珀色强调 |
 | E Moss 柔和 | Maia | Instrument Sans / Geist Mono | 绿调暖灰，大圆角 |
+| F Onyx 黑白灰 | Maia | Instrument Sans / Geist Mono | Moss 的形状，黑白灰配色，绿色表示向好、浅红表示风险，默认深色 |
 
 重新生成：`node tools/build-preview.mjs`（只用 Node 标准库）。截图和基础检查：`node tools/shot.mjs <html> <输出前缀>`（需要 Playwright）。
 
