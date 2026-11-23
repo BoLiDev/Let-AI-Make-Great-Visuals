@@ -403,10 +403,6 @@ body {
   color: var(--sev-low-fg);
 }
 
-.r-sev .r-icon {
-  font-size: 15px;
-}
-
 .r-sev[data-sev="blocker"] { color: var(--sev-blocker-fg); }
 .r-sev[data-sev="high"] { color: var(--sev-high-fg); }
 .r-sev[data-sev="medium"] { color: var(--sev-medium-fg); }

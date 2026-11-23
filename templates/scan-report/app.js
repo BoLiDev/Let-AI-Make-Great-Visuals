@@ -5,10 +5,10 @@
 
   // 严重程度是模板固定的四级，数据里只需要引用 id。
   const SEV = [
-    { id: 'blocker', label: '阻断', icon: 'octagon-alert' },
-    { id: 'high', label: '严重', icon: 'triangle-alert' },
-    { id: 'medium', label: '一般', icon: 'circle-alert' },
-    { id: 'low', label: '提示', icon: 'info' },
+    { id: 'blocker', label: '阻断' },
+    { id: 'high', label: '严重' },
+    { id: 'medium', label: '一般' },
+    { id: 'low', label: '提示' },
   ];
   const SEV_RANK = Object.fromEntries(SEV.map((s, i) => [s.id, i]));
   const SEV_BY_ID = Object.fromEntries(SEV.map((s) => [s.id, s]));
@@ -61,7 +61,7 @@
     return `<div class="r-sevbar" ${size ? `data-size="${size}"` : ''} role="img" aria-label="${label}" style="width:${Math.max(scale * 100, 4)}%">${segs}</div>`;
   }
 
-  const sevLabel = (id) => `<span class="r-sev" data-sev="${id}">${icon(SEV_BY_ID[id].icon)}${SEV_BY_ID[id].label}</span>`;
+  const sevLabel = (id) => `<span class="r-sev" data-sev="${id}">${SEV_BY_ID[id].label}</span>`;
 
   // 图例只说明颜色代表什么，不带数字；数字在悬停分布条的各段时显示。
   const legend = () => `<ul class="r-legend" aria-hidden="true">${SEV.map((x) => `<li><span class="r-dot" data-sev="${x.id}"></span>${x.label}</li>`).join('')}</ul>`;
