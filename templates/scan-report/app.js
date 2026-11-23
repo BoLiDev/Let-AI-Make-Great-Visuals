@@ -5,10 +5,10 @@
 
   // 严重程度是模板固定的四级，数据里只需要引用 id。
   const SEV = [
-    { id: 'blocker', label: '阻断', icon: 'octagon-alert', hint: '发布前必须修复' },
-    { id: 'high', label: '严重', icon: 'triangle-alert', hint: '本迭代内修复' },
-    { id: 'medium', label: '一般', icon: 'circle-alert', hint: '排期修复' },
-    { id: 'low', label: '提示', icon: 'info', hint: '建议优化' },
+    { id: 'blocker', label: '阻断', icon: 'octagon-alert' },
+    { id: 'high', label: '严重', icon: 'triangle-alert' },
+    { id: 'medium', label: '一般', icon: 'circle-alert' },
+    { id: 'low', label: '提示', icon: 'info' },
   ];
   const SEV_RANK = Object.fromEntries(SEV.map((s, i) => [s.id, i]));
   const SEV_BY_ID = Object.fromEntries(SEV.map((s) => [s.id, s]));
@@ -57,19 +57,11 @@
     const present = SEV.filter((s) => counts[s.id]);
     if (!present.length) return '';
     const label = present.map((s) => `${s.label} ${counts[s.id]}`).join('，');
-    const segs = present.map((s) => `<span data-sev="${s.id}" style="flex:${counts[s.id]} 0 0"></span>`).join('');
-    return `<div class="r-sevbar" ${size ? `data-size="${size}"` : ''} role="img" aria-label="${label}" title="${label}" style="width:${Math.max(scale * 100, 4)}%">${segs}</div>`;
+    const segs = present.map((s) => `<span data-sev="${s.id}" title="${s.label} ${counts[s.id]}" style="flex:${counts[s.id]} 0 0"></span>`).join('');
+    return `<div class="r-sevbar" ${size ? `data-size="${size}"` : ''} role="img" aria-label="${label}" style="width:${Math.max(scale * 100, 4)}%">${segs}</div>`;
   }
 
   const sevLabel = (id) => `<span class="r-sev" data-sev="${id}">${icon(SEV_BY_ID[id].icon)}${SEV_BY_ID[id].label}</span>`;
-
-  function legend(counts, withHint) {
-    return `<dl class="r-legend">${SEV.map((x) => `
-      <div class="r-legend-item">
-        <dt><span class="r-dot" data-sev="${x.id}"></span>${x.label}</dt>
-        <dd class="${counts[x.id] ? '' : 'r-muted'}">${counts[x.id]}${withHint ? `<small>${x.hint}</small>` : ''}</dd>
-      </div>`).join('')}</dl>`;
-  }
 
   function ago(days) {
     if (days === null) return '';
@@ -183,7 +175,7 @@
           <div class="r-stat-value">${dirty.length}<small>/ ${apps.length}</small></div>
         </div>
       </div>
-      <div>${sevbar(totals)}${legend(totals, true)}</div>
+      ${sevbar(totals)}
     </section>
 
     <section class="r-section">
@@ -201,7 +193,7 @@
     </section>
 
     <section class="r-section">
-      <div class="r-section-head"><h2 class="r-h2">问题种类<small>颜色表示该种类的严重程度</small></h2></div>
+      <div class="r-section-head"><h2 class="r-h2">问题种类</h2></div>
       ${typeBars(allIssues)}
     </section>
     ${R.footnote ? `<footer class="r-footer">${esc(R.footnote)}</footer>` : ''}`;
@@ -281,7 +273,7 @@
           <div class="r-stat-value">${typeCount}</div>
         </div>
       </div>
-      <div>${sevbar(app.sev)}${legend(app.sev, true)}</div>
+      ${sevbar(app.sev)}
     </section>
 
     <section class="r-section">
