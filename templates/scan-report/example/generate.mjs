@@ -1,4 +1,9 @@
-// 模拟数据：对一个 monorepo 的代码扫描结果。固定随机种子，每次生成结果一致。
+// 生成示例数据 data.json：对一个 monorepo 的模拟代码扫描结果。固定随机种子，每次生成结果一致。
+// 用法：node templates/scan-report/example/generate.mjs
+
+import { writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 function rng(seed) {
   let s = seed >>> 0;
@@ -17,14 +22,7 @@ const int = (min, max) => min + Math.floor(rand() * (max - min + 1));
 
 const GITLAB = 'https://gitlab.example.com/platform/web-monorepo';
 
-export const SEVERITIES = [
-  { id: 'blocker', label: '阻断', icon: 'octagon-alert', hint: '发布前必须修复' },
-  { id: 'high', label: '严重', icon: 'triangle-alert', hint: '本迭代内修复' },
-  { id: 'medium', label: '一般', icon: 'circle-alert', hint: '排期修复' },
-  { id: 'low', label: '提示', icon: 'info', hint: '建议优化' },
-];
-
-export const TYPES = [
+const TYPES = [
   {
     id: 'hardcoded-secret', label: '硬编码密钥', severity: 'blocker',
     messages: ['源码中包含明文 AccessKey', '源码中包含明文的第三方服务 Token', '测试账号密码写入了配置文件'],
@@ -96,10 +94,8 @@ const DAY = 86400000;
 const sha = () => Array.from({ length: 8 }, () => '0123456789abcdef'[int(0, 15)]).join('');
 const iso = (d) => d.toISOString().slice(0, 10);
 
-let issueSeq = 1000;
-
-function makeIssue(app, type, forceNew) {
-  const others = APP_DEFS.filter((a) => a[0] !== app.dir);
+function makeIssue(app, type) {
+  const others = APP_DEFS.filter((a) => a[0] !== app.id);
   const message = pick(type.messages)
     .replace('{other}', pick(others)[0])
     .replace('{pkg}', pick(PKGS))
@@ -107,31 +103,24 @@ function makeIssue(app, type, forceNew) {
     .replace('{size}', int(540, 980));
   const file = pick(type.files);
   const line = file === 'package.json' ? int(12, 60) : int(8, 420);
-  // 引入时间：大多数是存量问题，少数在上次扫描之后引入。
-  const isNew = forceNew || rand() < 0.07;
-  const ageDays = isNew ? int(0, 6) : int(9, 640);
+  const ageDays = rand() < 0.1 ? int(0, 8) : int(9, 640);
   const introducedAt = new Date(SCAN_DATE.getTime() - ageDays * DAY - int(0, DAY - 1));
   const commit = sha();
-  const path = `apps/${app.dir}/${file}`;
+  const path = `apps/${app.id}/${file}`;
   return {
-    id: `SCAN-${issueSeq++}`,
     type: type.id,
-    severity: type.severity,
     message,
     file: path,
     line,
-    introducedAt: iso(introducedAt),
-    ageDays,
-    isNew,
-    author: pick(AUTHORS),
-    commit,
-    mr: int(4200, 9800),
     url: `${GITLAB}/-/blob/${commit}/${path}#L${line}`,
+    introducedAt: iso(introducedAt),
+    author: pick(AUTHORS),
+    mr: `!${int(4200, 9800)}`,
   };
 }
 
 function buildApp([dir, name, teamIdx, level]) {
-  const app = { dir, name, team: TEAMS[teamIdx], path: `apps/${dir}`, url: `${GITLAB}/-/tree/main/apps/${dir}`, issues: [] };
+  const app = { id: dir, name, path: `apps/${dir}`, team: TEAMS[teamIdx], url: `${GITLAB}/-/tree/main/apps/${dir}`, issues: [] };
   if (level === 0) return app;
   const total = [0, int(1, 3), int(4, 8), int(9, 15), int(16, 24), int(26, 38)][level];
   // 阻断级问题只出现在少数应用里。
@@ -140,28 +129,23 @@ function buildApp([dir, name, teamIdx, level]) {
   const rest = TYPES.filter((t) => t.severity !== 'blocker');
   const weights = [5, 2, 6, 4, 2, 5]; // 对应 rest 的顺序
   const bag = rest.flatMap((t, i) => Array(weights[i]).fill(t));
-  for (let i = 0; i < blockerCount; i++) app.issues.push(makeIssue(app, pick(blockers), i === 0 && dir === 'checkout'));
-  for (let i = blockerCount; i < total; i++) app.issues.push(makeIssue(app, pick(bag), false));
+  for (let i = 0; i < blockerCount; i++) app.issues.push(makeIssue(app, pick(blockers)));
+  for (let i = blockerCount; i < total; i++) app.issues.push(makeIssue(app, pick(bag)));
   return app;
 }
 
-const apps = APP_DEFS.map(buildApp);
-
 export const report = {
-  repo: 'platform/web-monorepo',
-  repoUrl: GITLAB,
+  title: '代码扫描报告',
+  repo: { name: 'platform/web-monorepo', url: GITLAB },
   branch: 'main',
   commit: 'a41f9c2e',
   scannedAt: '2026-11-20 03:00',
-  prevScannedAt: '2026-11-13',
-  prevTotal: null, // 在下面计算
-  severities: SEVERITIES,
   types: TYPES.map(({ id, label, severity }) => ({ id, label, severity })),
-  apps,
+  apps: APP_DEFS.map(buildApp),
 };
 
-const total = apps.reduce((n, a) => n + a.issues.length, 0);
-const newCount = apps.reduce((n, a) => n + a.issues.filter((i) => i.isNew).length, 0);
-const fixedSinceLast = 9;
-report.fixedSinceLast = fixedSinceLast;
-report.prevTotal = total - newCount + fixedSinceLast;
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const out = join(dirname(fileURLToPath(import.meta.url)), 'data.json');
+  writeFileSync(out, JSON.stringify(report, null, 2) + '\n');
+  console.log(out);
+}

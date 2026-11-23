@@ -4,31 +4,37 @@
 
 方案由四部分组成：**内置组件库 + 模板 + Skill + 评测闭环**。所有依赖都拷入仓库，产出物不访问外网。
 
-> 当前状态：调研和方案设计已完成；正在做第一步，用一份模拟的代码扫描报告对比几套外观（见下方"外观预览"）。Skill、模板和评测集尚未实现。调研原文在 [`research/`](research/)，其中每条结论都标了核实程度；不少来源只看到了搜索摘要。
+> 当前状态：调研和方案设计已完成；第一个模板（扫描报告）可用。Skill、其他产出类型的模板和评测集尚未实现。调研原文在 [`research/`](research/)，其中每条结论都标了核实程度；不少来源只看到了搜索摘要。
 
-## 外观预览
+## 现在能用的：扫描报告模板
 
-同一份报告（列表页 + 子应用详情页），套用六套外观。用浏览器打开 [`preview/out/scan-report-compare.html`](preview/out/scan-report-compare.html)，底部的切换条可以在外观之间切换；每套外观也有独立文件，截图在 [`preview/screenshots/`](preview/screenshots/)。
+```bash
+node tools/build-report.mjs templates/scan-report/example/data.json -o report.html
+```
+
+提供一份 JSON 数据，得到一个零外部依赖、可离线打开的单文件 HTML 报告（列表页 + 子应用详情页）。只依赖 Node，不需要安装任何包。数据格式见 [`templates/scan-report/README.md`](templates/scan-report/README.md)。
+
+效果：[`preview/out/scan-report-moss.html`](preview/out/scan-report-moss.html)，截图在 [`preview/screenshots/`](preview/screenshots/)。
+
+默认外观是 Moss。另有五套外观可用 `--theme` 切换，[`preview/out/scan-report-compare.html`](preview/out/scan-report-compare.html) 可以并排比较：
 
 | 外观 | Basecoat 风格 | 字体 | 特点 |
 |---|---|---|---|
-| A 对照组 | Vega（默认） | Geist | 未改动的 shadcn，纯灰阶 |
-| B Ink 工程文档 | Sera | IBM Plex Sans / Mono | 直角、墨色、粗顶线 |
-| C Slate 蓝灰 | Nova | Hanken Grotesk / JetBrains Mono | 带蓝调的中性色，概览放在面板里 |
-| D Graphite 控制台 | Lyra | Instrument Sans / JetBrains Mono | 默认深色，琥珀色强调 |
-| E Moss 柔和（已选为默认） | Maia | Instrument Sans / Geist Mono | 绿调暖灰，大圆角 |
-| F Onyx 黑白灰 | Maia | Instrument Sans / Geist Mono | Moss 的形状，黑白灰配色，绿色表示向好、浅红表示风险，默认深色 |
-
-重新生成：`node tools/build-preview.mjs`（只用 Node 标准库）。截图和基础检查：`node tools/shot.mjs <html> <输出前缀>`（需要 Playwright）。
+| `moss`（默认） | Maia | Instrument Sans / Geist Mono | 绿调暖灰，大圆角，概览放在面板里 |
+| `onyx` | Maia | Instrument Sans / Geist Mono | Moss 的形状，黑白灰配色，默认深色 |
+| `ink` | Sera | IBM Plex Sans / Mono | 直角、墨色、粗顶线 |
+| `slate` | Nova | Hanken Grotesk / JetBrains Mono | 带蓝调的中性色 |
+| `graphite` | Lyra | Instrument Sans / JetBrains Mono | 默认深色，琥珀色强调 |
+| `baseline` | Vega（默认） | Geist | 未改动的 shadcn，仅作对照 |
 
 目录：
 
-- `docs/preferences.md`：评审沉淀下来的审美偏好
-- `vendor/`：拷入的第三方文件，见 [`vendor/README.md`](vendor/README.md)
+- `templates/`：模板。每个模板包含页面脚本、数据校验和示例数据
 - `components/report.css`：报告组件层，叠加在 Basecoat 之上
 - `themes/`：外观主题，只覆盖变量
-- `preview/scan-report/`：模拟数据和页面脚本
-- `tools/`：构建和截图脚本
+- `vendor/`：拷入的第三方文件，见 [`vendor/README.md`](vendor/README.md)
+- `tools/`：`build-report.mjs` 生成报告，`build-preview.mjs` 重新生成预览，`shot.mjs` 截图和基础检查（需要 Playwright）
+- `docs/preferences.md`：评审沉淀下来的审美偏好
 
 ## 一、为什么 AI 做的东西有 AI 感
 
