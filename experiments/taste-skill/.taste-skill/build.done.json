@@ -1,0 +1,11 @@
+{
+ "page": "scan-report.html",
+ "url": null,
+ "root": null,
+ "kind": "software",
+ "category": "代码扫描报告",
+ "primary": "查看子应用清单",
+ "rounds": 3,
+ "start": "2026-11-23T02:05:31.144Z",
+ "by": "gate.mjs --start"
+}

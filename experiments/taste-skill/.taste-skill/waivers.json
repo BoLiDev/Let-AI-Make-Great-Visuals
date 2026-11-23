@@ -1,0 +1,27 @@
+[
+  {
+    "check": "motion-layer",
+    "target": "html[data-motion]",
+    "reason": "motion.css is loaded: it is inlined in a <style> block because the report must be one offline file; the check looks for a <link>"
+  },
+  {
+    "check": "effect-kind",
+    "target": "div.stats",
+    "reason": "counter-rolls runs (html[data-moments-ready=1]); its module is inlined as a blob because the report must be one offline file, so the checker cannot fetch assets/moments/counter-rolls/moment.js"
+  },
+  {
+    "check": "run-on",
+    "target": "h1#hero-h",
+    "reason": "the grey halves are set as their own lines (display: block), each a count from the scan data; a full stop after a stacked Chinese heading line reads as a typo"
+  },
+  {
+    "check": "no-visual",
+    "target": "section#apps",
+    "reason": "the section is the report's own table of sub-apps with a severity bar per row; sections.md allows a picture-less section for a specs table"
+  },
+  {
+    "check": "copy-headline",
+    "target": "h1#hero-h",
+    "reason": "the h1 is the category itself (代码扫描报告, code-scan report) plus two counts; the check takes 'monorepo' from the repository name in the title, which sits in the kicker line above the h1"
+  }
+]

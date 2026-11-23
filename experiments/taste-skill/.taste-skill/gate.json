@@ -1,0 +1,1294 @@
+{
+ "start": "2026-11-23T02:05:31.144Z",
+ "round": 3,
+ "idle": 0,
+ "errors": 0,
+ "status": "open",
+ "history": [
+  {
+   "at": "2026-11-23T02:21:19.311Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 46,
+   "round": 1,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-23T02:23:33.233Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 34,
+   "round": 2,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-23T02:25:28.175Z",
+   "mode": "manual",
+   "status": "open",
+   "fails": 29,
+   "round": 3,
+   "reused": false,
+   "stopHookActive": false
+  }
+ ],
+ "max": 3,
+ "marker": {
+  "page": "scan-report.html",
+  "url": null,
+  "root": null,
+  "kind": "software",
+  "category": "代码扫描报告",
+  "primary": "查看子应用清单",
+  "rounds": 3,
+  "start": "2026-11-23T02:05:31.144Z",
+  "by": "gate.mjs --start"
+ },
+ "manual": true,
+ "roundKey": "112eb54460a9c01c:1a4f825f",
+ "roundFree": false,
+ "idleFree": false,
+ "blockKey": null,
+ "fp": "112eb54460a9c01c",
+ "page": "scan-report.html",
+ "found": {
+  "fails": [
+   {
+    "check": "gaming-suspect",
+    "where": "scan-report.html (inline script)",
+    "msg": "the page's own script reads the user agent near \"headless\" or an automation tool's name",
+    "fix": "delete the user-agent test; a visitor and the checker get the same page",
+    "widths": [],
+    "ids": [
+     "gaming-suspect"
+    ],
+    "wheres": [
+     "scan-report.html (inline script)"
+    ]
+   },
+   {
+    "check": "no-visual",
+    "where": "section#apps \"20 个子应用存在问题\"",
+    "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "no-visual"
+    ],
+    "wheres": [
+     "section#apps \"20 个子应用存在问题\""
+    ]
+   },
+   {
+    "check": "copy-headline",
+    "where": "h1#hero-h \"代码扫描报告 260 个问题 9 个阻断\"",
+    "msg": "\"代码扫描报告 260 个问题 9 个阻断\" does not name what is sold (monorepo, from the page title)",
+    "fix": "put the category noun in the h1 (and who it is for, or where), in 2 to 8 words",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "copy-headline"
+    ],
+    "wheres": [
+     "h1#hero-h \"代码扫描报告 260 个问题 9 个阻断\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台 apps/checkout 交易前端组 3 28\"",
+    "msg": "\"收银台 apps/checkout 交易前端组 3 28\" goes to #/app/checkout, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台 apps/checkout 交易前端组 3 28\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台 apps/merchant-admin 商家平台组 2 36\"",
+    "msg": "\"商家后台 apps/merchant-admin 商家平台组 2 36\" goes to #/app/merchant-admin, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台 apps/merchant-admin 商家平台组 2 36\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台 apps/risk-console 风控组 2 14\"",
+    "msg": "\"风控控制台 apps/risk-console 风控组 2 14\" goes to #/app/risk-console, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台 apps/risk-console 风控组 2 14\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(4) > a.approw \"店铺装修 apps/store-decoration 商家平台组 1 16\"",
+    "msg": "\"店铺装修 apps/store-decoration 商家平台组 1 16\" goes to #/app/store-decoration, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(4) > a.approw \"店铺装修 apps/store-decoration 商家平台组 1 16\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(5) > a.approw \"落地页搭建 apps/landing-builder 增长组 1 12\"",
+    "msg": "\"落地页搭建 apps/landing-builder 增长组 1 12\" goes to #/app/landing-builder, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(5) > a.approw \"落地页搭建 apps/landing-builder 增长组 1 12\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(6) > a.approw \"数据大盘 apps/data-dashboard 数据产品组 0 24\"",
+    "msg": "\"数据大盘 apps/data-dashboard 数据产品组 0 24\" goes to #/app/data-dashboard, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(6) > a.approw \"数据大盘 apps/data-dashboard 数据产品组 0 24\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(7) > a.approw \"订单中心 apps/order-center 交易前端组 0 23\"",
+    "msg": "\"订单中心 apps/order-center 交易前端组 0 23\" goes to #/app/order-center, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(7) > a.approw \"订单中心 apps/order-center 交易前端组 0 23\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(8) > a.approw \"营销活动 apps/marketing-activity 增长组 0 20\"",
+    "msg": "\"营销活动 apps/marketing-activity 增长组 0 20\" goes to #/app/marketing-activity, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(8) > a.approw \"营销活动 apps/marketing-activity 增长组 0 20\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(9) > a.approw \"购物车 apps/cart 交易前端组 0 14\"",
+    "msg": "\"购物车 apps/cart 交易前端组 0 14\" goes to #/app/cart, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(9) > a.approw \"购物车 apps/cart 交易前端组 0 14\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(10) > a.approw \"商品发布 apps/goods-publish 商家平台组 0 14\"",
+    "msg": "\"商品发布 apps/goods-publish 商家平台组 0 14\" goes to #/app/goods-publish, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(10) > a.approw \"商品发布 apps/goods-publish 商家平台组 0 14\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(11) > a.approw \"商品详情 apps/product-detail 基础体验组 0 13\"",
+    "msg": "\"商品详情 apps/product-detail 基础体验组 0 13\" goes to #/app/product-detail, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(11) > a.approw \"商品详情 apps/product-detail 基础体验组 0 13\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(12) > a.approw \"报表搭建 apps/report-builder 数据产品组 0 8\"",
+    "msg": "\"报表搭建 apps/report-builder 数据产品组 0 8\" goes to #/app/report-builder, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(12) > a.approw \"报表搭建 apps/report-builder 数据产品组 0 8\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(13) > a.approw \"退款售后 apps/refund 交易前端组 0 7\"",
+    "msg": "\"退款售后 apps/refund 交易前端组 0 7\" goes to #/app/refund, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(13) > a.approw \"退款售后 apps/refund 交易前端组 0 7\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(14) > a.approw \"优惠券 apps/coupon 增长组 0 7\"",
+    "msg": "\"优惠券 apps/coupon 增长组 0 7\" goes to #/app/coupon, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(14) > a.approw \"优惠券 apps/coupon 增长组 0 7\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(15) > a.approw \"商家入驻 apps/merchant-onboarding 商家平台组 0 6\"",
+    "msg": "\"商家入驻 apps/merchant-onboarding 商家平台组 0 6\" goes to #/app/merchant-onboarding, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(15) > a.approw \"商家入驻 apps/merchant-onboarding 商家平台组 0 6\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(16) > a.approw \"首页 apps/home 基础体验组 0 6\"",
+    "msg": "\"首页 apps/home 基础体验组 0 6\" goes to #/app/home, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(16) > a.approw \"首页 apps/home 基础体验组 0 6\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(17) > a.approw \"支付结果页 apps/payment-result 交易前端组 0 3\"",
+    "msg": "\"支付结果页 apps/payment-result 交易前端组 0 3\" goes to #/app/payment-result, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(17) > a.approw \"支付结果页 apps/payment-result 交易前端组 0 3\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(18) > a.approw \"抽奖 apps/lottery 增长组 0 3\"",
+    "msg": "\"抽奖 apps/lottery 增长组 0 3\" goes to #/app/lottery, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(18) > a.approw \"抽奖 apps/lottery 增长组 0 3\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(19) > a.approw \"搜索 apps/search 基础体验组 0 3\"",
+    "msg": "\"搜索 apps/search 基础体验组 0 3\" goes to #/app/search, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(19) > a.approw \"搜索 apps/search 基础体验组 0 3\""
+    ]
+   },
+   {
+    "check": "links",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(20) > a.approw \"登录注册 apps/login 基础体验组 0 3\"",
+    "msg": "\"登录注册 apps/login 基础体验组 0 3\" goes to #/app/login, which is not on this page",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "links"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(20) > a.approw \"登录注册 apps/login 基础体验组 0 3\""
+    ]
+   },
+   {
+    "check": "effect-kind",
+    "where": "div.grid.grid--top > div.span-5 > div.sevsum > div.stats",
+    "msg": "1 [data-moment] mark that never runs: counter-rolls on div.grid.grid--top > div.span-5 > div.sevsum > div.stats (assets/moments/counter-rolls/moment.js was never loaded); a moment is judged as one only when it runs",
+    "fix": "load assets/moments/moments.js (system.js does it for a page with [data-moment]) and keep the dealt id, or take the data-moment mark off the section",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "effect-kind"
+    ],
+    "wheres": [
+     "div.grid.grid--top > div.span-5 > div.sevsum > div.stats"
+    ]
+   },
+   {
+    "check": "motion-layer",
+    "where": "html[data-motion]",
+    "msg": "the page marks <html data-motion> but motion.css is not loaded: buttons, links, cards and photos answer nothing on hover",
+    "fix": "link assets/motion/motion.css after cards.css and keep data-motion on <html> (both, or neither)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "motion-layer"
+    ],
+    "wheres": [
+     "html[data-motion]"
+    ]
+   },
+   {
+    "check": "run-on",
+    "where": "h1#hero-h \"代码扫描报告260 个问题9 个阻断\"",
+    "msg": "\"代码扫描报告 | 260 个问题\": the heading runs its first sentence into the grey second one with no stop",
+    "fix": "end the heading's first sentence with a full stop before its grey second one (\"Rooms and prices. Breakfast included.\")",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "run-on"
+    ],
+    "wheres": [
+     "h1#hero-h \"代码扫描报告260 个问题9 个阻断\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台apps/checkout 交易前端组 3 28\"",
+    "msg": "a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台apps/checkout 交易前端组 3 28\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台apps/merchant-admin 商家平台组 2 36\"",
+    "msg": "a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台apps/merchant-admin 商家平台组 2 36\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台apps/risk-console 风控组 2 14\"",
+    "msg": "a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (and 18 more like it: \"店铺装修apps/store-decoratio\", \"落地页搭建apps/landing-builde\", \"数据大盘apps/data-dashboard \") (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台apps/risk-console 风控组 2 14\""
+    ]
+   },
+   {
+    "check": "hole",
+    "where": "section#types \"8 种问题，按数量排列\"",
+    "msg": "an empty hole 208x456px inside the section (54% of the screen's height), with content above and below it",
+    "fix": "close the empty space: move the content together, or give the space the visual it lacks",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "hole"
+    ],
+    "wheres": [
+     "section#types \"8 种问题，按数量排列\""
+    ]
+   },
+   {
+    "check": "hero-lines",
+    "where": "section.hero h1",
+    "msg": "the check fills the h1 to 43 characters (this hero's maxChars in heroes.json), not the page's own: it takes 6 lines at 1440, 3 at most",
+    "fix": "the check fills the h1 to this hero's maxChars, not your own: take the next type pairing the deal printed (start.mjs); when the h1 is final and fits, waive it (target: section.hero h1)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "hero-lines"
+    ],
+    "wheres": [
+     "section.hero h1"
+    ]
+   },
+   {
+    "check": "edge-right",
+    "where": "nav actions",
+    "msg": "end at x 215.5, the page's right line is 366",
+    "fix": "end it on the .wrap right line",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-right"
+    ],
+    "wheres": [
+     "nav actions"
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "#apps section.section \"20 个子应用存在问题 搜索子应用 子应用负责团队阻断↓问题严重\"",
+    "msg": "2027px, 2.40 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "#apps section.section \"20 个子应用存在问题 搜索子应用 子应用负责团队阻断↓问题严重\""
+    ]
+   },
+   {
+    "check": "hero-maxchars",
+    "where": "section.hero.hero--split section.hero.hero--split \"platform/web-monorepo 代码扫描报告260 \"",
+    "msg": "with a 43-character h1 (heroes.json maxChars): ends at y 892, past the fold (844): 1.06 screens tall",
+    "fix": "shorten the h1 or give the hero room for the longest headline",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "hero-maxchars"
+    ],
+    "wheres": [
+     "section.hero.hero--split section.hero.hero--split \"platform/web-monorepo 代码扫描报告260 \""
+    ]
+   }
+  ],
+  "warns": [
+   {
+    "check": "placeholder",
+    "where": "div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(4) > a.nav__link \"仓库\"",
+    "msg": "2 links go to a stand-in address (https://gitlab.example.com/platform/web-monorepo)",
+    "fix": "put in the real address, domain and number before the page ships",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "p.t-stat.mo-cr > span.mo-cr__col > span.mo-cr__strip > span:nth-of-type(2) \"0\"",
+    "msg": "cut 41px at the bottom by the overflow of div.stats > div.stat:nth-of-type(1) > p.t-stat.mo-cr > span.mo-cr__col (inside a held section or scroll scene, whose motion --quick does not check)",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(1) > span.mo-cr__strip > span:nth-of-type(2) \"9\"",
+    "msg": "cut 41px at the bottom by the overflow of div.stats > div.stat:nth-of-type(2) > p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(1) (inside a held section or scroll scene, whose motion --quick does not check) (and 6 more like it: \"4\", \"2\", \"1\", \"7\", ...)",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "div.grid.grid--top > div.span-5 > div.sevsum > div.stats \"9 0 1 2 3 4 5 6 7 8 9 阻断 8 9 0 1 2 3 4 5\"",
+    "msg": "starts an animation (1.4 s) the moment it is scrolled into view (an IntersectionObserver) on span.mo-cr__strip (inside a dealt moment's section, [data-moment]: an enter moment is expected on every kind; its still is judged under reduced motion)",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "label-centre",
+    "where": "header.nav.nav--centre > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"查看子应用清单\"",
+    "msg": "its label sits 18px off-centre (25px of room at the left, 43px at the right)",
+    "fix": "centre the label in its button, or fill the empty side with an icon",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-current",
+    "where": "header.nav.nav--centre",
+    "msg": "the nav stays on screen with 3 links to the page's sections, but never marks the one you are in (no link changes as the page scrolls)",
+    "fix": "mark the link of the section on screen (a colour, a weight or a line under it) as the visitor scrolls",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.hero-text.grid > div.hero__text.span-5 > div.btn-row > a.btn.btn--secondary \"查看问题种类\"",
+    "msg": "the button \"查看问题种类\" (#181b22) stands only 1.13:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "effect-kind",
+    "where": "div.grid.grid--top > div.span-5 > div.sevsum > div.stats",
+    "msg": "4 scroll-driven section moments on a software page (data-scroll-moment or data-moment 4, sections moving with the scroll 0): one or two are allowed (house rule)",
+    "fix": "keep one or two section moments and let the other sections scroll plainly",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "skip-link",
+    "where": "header.nav.nav--centre > div.wrap.nav__bar > a.skip-link:nth-of-type(1) \"跳到正文\"",
+    "msg": "the first Tab stop is \"跳到正文\", not a skip link: a keyboard user tabs through the whole nav on every visit",
+    "fix": "add the starter's skip link as the header's first child: <a class=\"skip-link\" href=\"#top\">Skip to content</a>",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "share-meta",
+    "where": "head",
+    "msg": "the head lacks og:image: a shared link shows no picture or title of its own",
+    "fix": "copy the head block of starter.html: og tags, twitter:card, the icon and theme-color (references/system.md, Head)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "action-repeat",
+    "where": "header.nav.nav--centre > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"查看子应用清单\"",
+    "msg": "\"查看子应用清单\" shows 2 times on the first screen at 1440px (nav, hero): the nav's button and the hero's; nothing else on the screen may repeat it",
+    "fix": "show the action once a screen besides the nav's button: the hero's, the close's or the phone bar's, never all at once",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "container-edges",
+    "where": "p.t-stat.mo-cr > span.mo-cr__col:nth-of-type(2) > span.mo-cr__strip > span:nth-of-type(20) \"1\"",
+    "msg": "1 text block starts on a left line at x 316, 236px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (it is in a scroll scene: told as a WARN) (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-stat-strip",
+    "msg": "stat strip x1",
+    "fix": "a strip only of figures the brief gives (a price, hours, a count); otherwise put each number in the sentence it proves, or leave it out (references/copy-tells.md)",
+    "widths": [],
+    "from": "copy",
+    "where": "copy x1: \"3 / 28 / 2 / 36 / 2 /...\"",
+    "exact": false
+   }
+  ],
+  "crashed": [],
+  "seconds": {
+   "consistency": 73,
+   "layout": 3
+  }
+ },
+ "open": [
+  {
+   "check": "gaming-suspect",
+   "where": "scan-report.html (inline script)",
+   "msg": "the page's own script reads the user agent near \"headless\" or an automation tool's name",
+   "fix": "delete the user-agent test; a visitor and the checker get the same page",
+   "widths": [],
+   "ids": [
+    "gaming-suspect"
+   ],
+   "wheres": [
+    "scan-report.html (inline script)"
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台 apps/checkout 交易前端组 3 28\"",
+   "msg": "\"收银台 apps/checkout 交易前端组 3 28\" goes to #/app/checkout, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台 apps/checkout 交易前端组 3 28\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台 apps/merchant-admin 商家平台组 2 36\"",
+   "msg": "\"商家后台 apps/merchant-admin 商家平台组 2 36\" goes to #/app/merchant-admin, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台 apps/merchant-admin 商家平台组 2 36\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台 apps/risk-console 风控组 2 14\"",
+   "msg": "\"风控控制台 apps/risk-console 风控组 2 14\" goes to #/app/risk-console, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台 apps/risk-console 风控组 2 14\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(4) > a.approw \"店铺装修 apps/store-decoration 商家平台组 1 16\"",
+   "msg": "\"店铺装修 apps/store-decoration 商家平台组 1 16\" goes to #/app/store-decoration, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(4) > a.approw \"店铺装修 apps/store-decoration 商家平台组 1 16\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(5) > a.approw \"落地页搭建 apps/landing-builder 增长组 1 12\"",
+   "msg": "\"落地页搭建 apps/landing-builder 增长组 1 12\" goes to #/app/landing-builder, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(5) > a.approw \"落地页搭建 apps/landing-builder 增长组 1 12\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(6) > a.approw \"数据大盘 apps/data-dashboard 数据产品组 0 24\"",
+   "msg": "\"数据大盘 apps/data-dashboard 数据产品组 0 24\" goes to #/app/data-dashboard, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(6) > a.approw \"数据大盘 apps/data-dashboard 数据产品组 0 24\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(7) > a.approw \"订单中心 apps/order-center 交易前端组 0 23\"",
+   "msg": "\"订单中心 apps/order-center 交易前端组 0 23\" goes to #/app/order-center, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(7) > a.approw \"订单中心 apps/order-center 交易前端组 0 23\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(8) > a.approw \"营销活动 apps/marketing-activity 增长组 0 20\"",
+   "msg": "\"营销活动 apps/marketing-activity 增长组 0 20\" goes to #/app/marketing-activity, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(8) > a.approw \"营销活动 apps/marketing-activity 增长组 0 20\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(9) > a.approw \"购物车 apps/cart 交易前端组 0 14\"",
+   "msg": "\"购物车 apps/cart 交易前端组 0 14\" goes to #/app/cart, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(9) > a.approw \"购物车 apps/cart 交易前端组 0 14\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(10) > a.approw \"商品发布 apps/goods-publish 商家平台组 0 14\"",
+   "msg": "\"商品发布 apps/goods-publish 商家平台组 0 14\" goes to #/app/goods-publish, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(10) > a.approw \"商品发布 apps/goods-publish 商家平台组 0 14\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(11) > a.approw \"商品详情 apps/product-detail 基础体验组 0 13\"",
+   "msg": "\"商品详情 apps/product-detail 基础体验组 0 13\" goes to #/app/product-detail, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(11) > a.approw \"商品详情 apps/product-detail 基础体验组 0 13\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(12) > a.approw \"报表搭建 apps/report-builder 数据产品组 0 8\"",
+   "msg": "\"报表搭建 apps/report-builder 数据产品组 0 8\" goes to #/app/report-builder, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(12) > a.approw \"报表搭建 apps/report-builder 数据产品组 0 8\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(13) > a.approw \"退款售后 apps/refund 交易前端组 0 7\"",
+   "msg": "\"退款售后 apps/refund 交易前端组 0 7\" goes to #/app/refund, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(13) > a.approw \"退款售后 apps/refund 交易前端组 0 7\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(14) > a.approw \"优惠券 apps/coupon 增长组 0 7\"",
+   "msg": "\"优惠券 apps/coupon 增长组 0 7\" goes to #/app/coupon, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(14) > a.approw \"优惠券 apps/coupon 增长组 0 7\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(15) > a.approw \"商家入驻 apps/merchant-onboarding 商家平台组 0 6\"",
+   "msg": "\"商家入驻 apps/merchant-onboarding 商家平台组 0 6\" goes to #/app/merchant-onboarding, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(15) > a.approw \"商家入驻 apps/merchant-onboarding 商家平台组 0 6\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(16) > a.approw \"首页 apps/home 基础体验组 0 6\"",
+   "msg": "\"首页 apps/home 基础体验组 0 6\" goes to #/app/home, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(16) > a.approw \"首页 apps/home 基础体验组 0 6\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(17) > a.approw \"支付结果页 apps/payment-result 交易前端组 0 3\"",
+   "msg": "\"支付结果页 apps/payment-result 交易前端组 0 3\" goes to #/app/payment-result, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(17) > a.approw \"支付结果页 apps/payment-result 交易前端组 0 3\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(18) > a.approw \"抽奖 apps/lottery 增长组 0 3\"",
+   "msg": "\"抽奖 apps/lottery 增长组 0 3\" goes to #/app/lottery, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(18) > a.approw \"抽奖 apps/lottery 增长组 0 3\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(19) > a.approw \"搜索 apps/search 基础体验组 0 3\"",
+   "msg": "\"搜索 apps/search 基础体验组 0 3\" goes to #/app/search, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(19) > a.approw \"搜索 apps/search 基础体验组 0 3\""
+   ]
+  },
+  {
+   "check": "links",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(20) > a.approw \"登录注册 apps/login 基础体验组 0 3\"",
+   "msg": "\"登录注册 apps/login 基础体验组 0 3\" goes to #/app/login, which is not on this page",
+   "fix": "point every link at a real section, page or file",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "links"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(20) > a.approw \"登录注册 apps/login 基础体验组 0 3\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台apps/checkout 交易前端组 3 28\"",
+   "msg": "a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw \"收银台apps/checkout 交易前端组 3 28\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台apps/merchant-admin 商家平台组 2 36\"",
+   "msg": "a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw \"商家后台apps/merchant-admin 商家平台组 2 36\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台apps/risk-console 风控组 2 14\"",
+   "msg": "a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (and 18 more like it: \"店铺装修apps/store-decoratio\", \"落地页搭建apps/landing-builde\", \"数据大盘apps/data-dashboard \") (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw \"风控控制台apps/risk-console 风控组 2 14\""
+   ]
+  },
+  {
+   "check": "hole",
+   "where": "section#types \"8 种问题，按数量排列\"",
+   "msg": "an empty hole 208x456px inside the section (54% of the screen's height), with content above and below it",
+   "fix": "close the empty space: move the content together, or give the space the visual it lacks",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "hole"
+   ],
+   "wheres": [
+    "section#types \"8 种问题，按数量排列\""
+   ]
+  },
+  {
+   "check": "hero-lines",
+   "where": "section.hero h1",
+   "msg": "the check fills the h1 to 43 characters (this hero's maxChars in heroes.json), not the page's own: it takes 6 lines at 1440, 3 at most",
+   "fix": "the check fills the h1 to this hero's maxChars, not your own: take the next type pairing the deal printed (start.mjs); when the h1 is final and fits, waive it (target: section.hero h1)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "hero-lines"
+   ],
+   "wheres": [
+    "section.hero h1"
+   ]
+  },
+  {
+   "check": "edge-right",
+   "where": "nav actions",
+   "msg": "end at x 215.5, the page's right line is 366",
+   "fix": "end it on the .wrap right line",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-right"
+   ],
+   "wheres": [
+    "nav actions"
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "#apps section.section \"20 个子应用存在问题 搜索子应用 子应用负责团队阻断↓问题严重\"",
+   "msg": "2027px, 2.40 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "#apps section.section \"20 个子应用存在问题 搜索子应用 子应用负责团队阻断↓问题严重\""
+   ]
+  },
+  {
+   "check": "hero-maxchars",
+   "where": "section.hero.hero--split section.hero.hero--split \"platform/web-monorepo 代码扫描报告260 \"",
+   "msg": "with a 43-character h1 (heroes.json maxChars): ends at y 892, past the fold (844): 1.06 screens tall",
+   "fix": "shorten the h1 or give the hero room for the longest headline",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "hero-maxchars"
+   ],
+   "wheres": [
+    "section.hero.hero--split section.hero.hero--split \"platform/web-monorepo 代码扫描报告260 \""
+   ]
+  }
+ ],
+ "waived": [
+  {
+   "check": "no-visual",
+   "where": "section#apps \"20 个子应用存在问题\"",
+   "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+   "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "no-visual"
+   ],
+   "wheres": [
+    "section#apps \"20 个子应用存在问题\""
+   ],
+   "reason": "the section is the report's own table of sub-apps with a severity bar per row; sections.md allows a picture-less section for a specs table"
+  },
+  {
+   "check": "copy-headline",
+   "where": "h1#hero-h \"代码扫描报告 260 个问题 9 个阻断\"",
+   "msg": "\"代码扫描报告 260 个问题 9 个阻断\" does not name what is sold (monorepo, from the page title)",
+   "fix": "put the category noun in the h1 (and who it is for, or where), in 2 to 8 words",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "copy-headline"
+   ],
+   "wheres": [
+    "h1#hero-h \"代码扫描报告 260 个问题 9 个阻断\""
+   ],
+   "reason": "the h1 is the category itself (代码扫描报告, code-scan report) plus two counts; the check takes 'monorepo' from the repository name in the title, which sits in the kicker line above the h1"
+  },
+  {
+   "check": "effect-kind",
+   "where": "div.grid.grid--top > div.span-5 > div.sevsum > div.stats",
+   "msg": "1 [data-moment] mark that never runs: counter-rolls on div.grid.grid--top > div.span-5 > div.sevsum > div.stats (assets/moments/counter-rolls/moment.js was never loaded); a moment is judged as one only when it runs",
+   "fix": "load assets/moments/moments.js (system.js does it for a page with [data-moment]) and keep the dealt id, or take the data-moment mark off the section",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "effect-kind"
+   ],
+   "wheres": [
+    "div.grid.grid--top > div.span-5 > div.sevsum > div.stats"
+   ],
+   "reason": "counter-rolls runs (html[data-moments-ready=1]); its module is inlined as a blob because the report must be one offline file, so the checker cannot fetch assets/moments/counter-rolls/moment.js"
+  },
+  {
+   "check": "motion-layer",
+   "where": "html[data-motion]",
+   "msg": "the page marks <html data-motion> but motion.css is not loaded: buttons, links, cards and photos answer nothing on hover",
+   "fix": "link assets/motion/motion.css after cards.css and keep data-motion on <html> (both, or neither)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "motion-layer"
+   ],
+   "wheres": [
+    "html[data-motion]"
+   ],
+   "reason": "motion.css is loaded: it is inlined in a <style> block because the report must be one offline file; the check looks for a <link>"
+  },
+  {
+   "check": "run-on",
+   "where": "h1#hero-h \"代码扫描报告260 个问题9 个阻断\"",
+   "msg": "\"代码扫描报告 | 260 个问题\": the heading runs its first sentence into the grey second one with no stop",
+   "fix": "end the heading's first sentence with a full stop before its grey second one (\"Rooms and prices. Breakfast included.\")",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "run-on"
+   ],
+   "wheres": [
+    "h1#hero-h \"代码扫描报告260 个问题9 个阻断\""
+   ],
+   "reason": "the grey halves are set as their own lines (display: block), each a count from the scan data; a full stop after a stacked Chinese heading line reads as a typo"
+  }
+ ],
+ "warnCount": 13,
+ "at": "2026-11-23T02:25:28.175Z",
+ "openTold": true
+}

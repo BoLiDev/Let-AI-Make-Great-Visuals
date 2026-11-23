@@ -1,0 +1,20 @@
+{
+  "palettes": [
+    "blue-black-cornflower"
+  ],
+  "types": [
+    "host"
+  ],
+  "dealt": [
+    "host",
+    "figtree",
+    "reddit"
+  ],
+  "moments": [
+    {
+      "id": "counter-rolls",
+      "at": "2026-11-23T02:05:31.407Z",
+      "seed": "0ea7889e"
+    }
+  ]
+}

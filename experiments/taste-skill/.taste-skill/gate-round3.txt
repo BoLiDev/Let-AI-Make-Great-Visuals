@@ -1,0 +1,97 @@
+gate: checking scan-report.html (software); this takes a few minutes on a CPU Chrome
+gate: rounds used up; 29 FAIL open
+  FAIL gaming-suspect   scan-report.html (inline script)
+       the page's own script reads the user agent near "headless" or an automation tool's name
+       fix: delete the user-agent test; a visitor and the checker get the same page
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw "收银台 apps/checkout 交易前  [1440]
+       "收银台 apps/checkout 交易前端组 3 28" goes to #/app/checkout, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw "商家后台 apps/merchant-ad  [1440]
+       "商家后台 apps/merchant-admin 商家平台组 2 36" goes to #/app/merchant-admin, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw "风控控制台 apps/risk-conso  [1440]
+       "风控控制台 apps/risk-console 风控组 2 14" goes to #/app/risk-console, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(4) > a.approw "店铺装修 apps/store-decor  [1440]
+       "店铺装修 apps/store-decoration 商家平台组 1 16" goes to #/app/store-decoration, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(5) > a.approw "落地页搭建 apps/landing-bu  [1440]
+       "落地页搭建 apps/landing-builder 增长组 1 12" goes to #/app/landing-builder, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(6) > a.approw "数据大盘 apps/data-dashbo  [1440]
+       "数据大盘 apps/data-dashboard 数据产品组 0 24" goes to #/app/data-dashboard, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(7) > a.approw "订单中心 apps/order-cente  [1440]
+       "订单中心 apps/order-center 交易前端组 0 23" goes to #/app/order-center, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(8) > a.approw "营销活动 apps/marketing-a  [1440]
+       "营销活动 apps/marketing-activity 增长组 0 20" goes to #/app/marketing-activity, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(9) > a.approw "购物车 apps/cart 交易前端组 0  [1440]
+       "购物车 apps/cart 交易前端组 0 14" goes to #/app/cart, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(10) > a.approw "商品发布 apps/goods-publ  [1440]
+       "商品发布 apps/goods-publish 商家平台组 0 14" goes to #/app/goods-publish, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(11) > a.approw "商品详情 apps/product-de  [1440]
+       "商品详情 apps/product-detail 基础体验组 0 13" goes to #/app/product-detail, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(12) > a.approw "报表搭建 apps/report-bui  [1440]
+       "报表搭建 apps/report-builder 数据产品组 0 8" goes to #/app/report-builder, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(13) > a.approw "退款售后 apps/refund 交易前  [1440]
+       "退款售后 apps/refund 交易前端组 0 7" goes to #/app/refund, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(14) > a.approw "优惠券 apps/coupon 增长组   [1440]
+       "优惠券 apps/coupon 增长组 0 7" goes to #/app/coupon, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(15) > a.approw "商家入驻 apps/merchant-o  [1440]
+       "商家入驻 apps/merchant-onboarding 商家平台组 0 6" goes to #/app/merchant-onboarding, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(16) > a.approw "首页 apps/home 基础体验组 0  [1440]
+       "首页 apps/home 基础体验组 0 6" goes to #/app/home, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(17) > a.approw "支付结果页 apps/payment-r  [1440]
+       "支付结果页 apps/payment-result 交易前端组 0 3" goes to #/app/payment-result, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(18) > a.approw "抽奖 apps/lottery 增长组   [1440]
+       "抽奖 apps/lottery 增长组 0 3" goes to #/app/lottery, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(19) > a.approw "搜索 apps/search 基础体验组  [1440]
+       "搜索 apps/search 基础体验组 0 3" goes to #/app/search, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL links            div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(20) > a.approw "登录注册 apps/login 基础体验  [1440]
+       "登录注册 apps/login 基础体验组 0 3" goes to #/app/login, which is not on this page
+       fix: point every link at a real section, page or file
+  FAIL row-lines        div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(1) > a.approw "收银台apps/checkout 交易前端  [1440]
+       a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (SR-7)
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines        div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(2) > a.approw "商家后台apps/merchant-adm  [1440]
+       a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (SR-7)
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines        div:nth-of-type(3) > ul.rows.applist > li:nth-of-type(3) > a.approw "风控控制台apps/risk-consol  [1440]
+       a row of 3 items: its first item starts at 566px, the container's left line at 80px; its last item ends at 989px, the container's right line at 1360px (2px either way) (and 18 more like it: "店铺装修apps/store-decoratio", "落
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL hole             section#types "8 种问题，按数量排列"  [390]
+       an empty hole 208x456px inside the section (54% of the screen's height), with content above and below it
+       fix: close the empty space: move the content together, or give the space the visual it lacks
+  FAIL hero-lines       section.hero h1  [1440, 390]
+       the check fills the h1 to 43 characters (this hero's maxChars in heroes.json), not the page's own: it takes 6 lines at 1440, 3 at most
+       fix: the check fills the h1 to this hero's maxChars, not your own: take the next type pairing the deal printed (start.mjs); when the h1 is final and fits, waive it (target: section.hero h1)
+  FAIL edge-right       nav actions  [390]
+       end at x 215.5, the page's right line is 366
+       fix: end it on the .wrap right line
+  FAIL screen-height    #apps section.section "20 个子应用存在问题 搜索子应用 子应用负责团队阻断↓问题严重"  [390]
+       2027px, 2.40 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills
+       fix: make the section exactly one or two screens (--h: 1 or 2)
+  FAIL hero-maxchars    section.hero.hero--split section.hero.hero--split "platform/web-monorepo 代码扫描报告260 "  [390]
+       with a 43-character h1 (heroes.json maxChars): ends at y 892, past the fold (844): 1.06 screens tall
+       fix: shorten the h1 or give the hero room for the longest headline
+  WAIVED no-visual section#apps "20 个子应用存在问题": the section is the report's own table of sub-apps with a severity bar per row; sections.md allows a picture-less section for a specs table
+  WAIVED copy-headline h1#hero-h "代码扫描报告 260 个问题 9 个阻断": the h1 is the category itself (代码扫描报告, code-scan report) plus two counts; the check takes 'monorepo' from the repository name in the title, which sits in the kicker line above the h1
+  WAIVED effect-kind div.grid.grid--top > div.span-5 > div.sevsum > div.stats: counter-rolls runs (html[data-moments-ready=1]); its module is inlined as a blob because the report must be one offline file, so the checker cannot fetch assets/moments/counter-rolls/moment.js
+  WAIVED motion-layer html[data-motion]: motion.css is loaded: it is inlined in a <style> block because the report must be one offline file; the check looks for a <link>
+  WAIVED run-on h1#hero-h "代码扫描报告260 个问题9 个阻断": the grey halves are set as their own lines (display: block), each a count from the scan data; a full stop after a stacked Chinese heading line reads as a typo
+  13 WARN (not blocking), first: placeholder div.wrap.nav__bar > nav.nav__links > div; cut-text p.t-stat.mo-cr > span.mo-cr__col > span.; cut-text p.t-stat.mo-cr > span.mo-cr__col:nth-of-; scroll-reveal div.grid.grid--top > div.span-5 > div.se; label-centre header.nav.nav--centre > div.wrap.nav__b
+Stop fixing: put these open FAILs and the waivers in your report, then finish.
+GATE: OPEN 29 (rounds used up)
