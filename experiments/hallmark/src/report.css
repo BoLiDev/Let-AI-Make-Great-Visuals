@@ -19,7 +19,7 @@ a:hover { text-decoration-thickness: 2px; }
 .meta { display: flex; flex-wrap: wrap; gap: var(--space-2xs) var(--space-lg); margin: 0; }
 .meta > div { display: flex; align-items: baseline; gap: var(--space-xs); }
 .meta dt { color: var(--color-muted); }
-.meta dd { margin: 0; color: var(--color-ink); }
+.meta dd { margin: 0; color: var(--color-ink); white-space: nowrap; }
 
 /* 控件 */
 .btn { position: relative; display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 36px; padding: 0 var(--space-sm); border: var(--rule-hair) solid var(--color-ink); border-radius: var(--radius-pill); background: transparent; color: var(--color-ink); font: 500 var(--text-sm)/1 var(--font-display); white-space: nowrap; cursor: pointer; transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
@@ -80,11 +80,11 @@ a:hover { text-decoration-thickness: 2px; }
 /* 印张：浅色纸，顶端一道墨线，表格直接排在上面 */
 .sheet { min-width: 0; padding: var(--space-lg) var(--space-lg) var(--space-xl); background: var(--color-sheet); border-top: var(--rule-bar) solid var(--color-ink); }
 .sheet__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-sm) var(--space-lg); padding-bottom: var(--space-md); }
-.sheet__head h2 { display: flex; align-items: baseline; gap: var(--space-sm); max-width: none; font-size: var(--text-xl); }
-.sheet__head h2 small { color: var(--color-muted); font: 400 var(--text-sm)/1 var(--font-body); letter-spacing: 0; }
+.sheet__head h2 { max-width: none; font-size: var(--text-xl); }
+.sheet__head h2 small { margin-left: var(--space-sm); color: var(--color-muted); font: 400 var(--text-sm)/1 var(--font-body); letter-spacing: 0; }
 
 .tbl { width: 100%; border-collapse: collapse; }
-.tbl th { padding: var(--space-2xs) var(--space-sm); border-bottom: var(--rule-bar) solid var(--color-rule-2); color: var(--color-muted); font: 500 var(--text-sm)/1.3 var(--font-body); text-align: left; white-space: nowrap; vertical-align: bottom; }
+.tbl th { padding: var(--space-2xs) var(--space-sm); border-bottom: var(--rule-bar) solid var(--color-rule-2); color: var(--color-muted); font: 500 var(--text-sm)/1.3 var(--font-body); text-align: left; white-space: nowrap; vertical-align: middle; height: 40px; }
 .tbl td { padding: var(--space-xs) var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); vertical-align: top; }
 .tbl th:first-child, .tbl td:first-child { padding-left: 0; }
 .tbl th:last-child, .tbl td:last-child { padding-right: 0; }
@@ -97,7 +97,7 @@ a:hover { text-decoration-thickness: 2px; }
 .tbl tr[data-href]:hover { background: var(--color-sheet-2); }
 .tbl--apps td { vertical-align: middle; white-space: nowrap; }
 .app-name { font-weight: 500; }
-.col-bar { width: 22%; }
+.col-bar { width: 18%; min-width: 96px; }
 .tbl .bar { height: 8px; }
 
 .sev { white-space: nowrap; }
@@ -107,7 +107,7 @@ a:hover { text-decoration-thickness: 2px; }
 .sev[data-sev="low"] { color: var(--color-muted); }
 .issue__type { color: var(--color-ink); font-weight: 500; }
 .issue__msg { color: var(--color-muted); }
-.loc { overflow-wrap: anywhere; }
+.loc { white-space: nowrap; }
 .when { white-space: nowrap; }
 .when .mono { color: var(--color-ink); }
 .when__who { display: block; color: var(--color-muted); }
@@ -126,17 +126,18 @@ a:hover { text-decoration-thickness: 2px; }
 .foot { padding-top: var(--space-lg); color: var(--color-muted); }
 
 @media (max-width: 68rem) {
-  .col-path { display: none; }
-}
-@media (max-width: 60rem) {
   .page { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); padding-block: var(--space-lg) var(--space-xl); }
-  .rail { position: static; gap: var(--space-lg); }
-  .col-bar, .col-team { display: none; }
+  .rail { position: static; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--space-lg) var(--space-xl); align-items: start; }
+  .rail__head { grid-column: 1 / -1; }
+}
+@media (max-width: 52rem) {
+  .col-path, .col-bar { display: none; }
 }
 @media (max-width: 40rem) {
   .sheet { padding: var(--space-md) var(--space-md) var(--space-lg); }
   .search { width: 100%; }
-  .col-mid { display: none; }
+  .col-mid, .col-team { display: none; }
+  .loc { white-space: normal; overflow-wrap: anywhere; }
   .tbl--issues thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .tbl--issues tr { display: grid; gap: var(--space-2xs); padding-block: var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); }
   .tbl--issues td { padding: 0; border: 0; }

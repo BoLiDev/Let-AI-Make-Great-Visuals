@@ -1,0 +1,114 @@
+{
+ "list": {
+  "transitionAll": [],
+  "smallHits": [],
+  "overlappingHits": [],
+  "overflowX": 0,
+  "fontSmoothing": "antialiased",
+  "tabular": true,
+  "h1Wrap": "balance",
+  "iconStrokes": [
+   "1.5px"
+  ],
+  "iconSizes": [
+   16,
+   20
+  ],
+  "images": 0,
+  "remoteRequests": [],
+  "errors": []
+ },
+ "detail": {
+  "transitionAll": [],
+  "smallHits": [],
+  "overlappingHits": [],
+  "overflowX": 0,
+  "fontSmoothing": "antialiased",
+  "tabular": true,
+  "h1Wrap": "balance",
+  "iconStrokes": [
+   "1.5px"
+  ],
+  "iconSizes": [
+   16,
+   20
+  ],
+  "images": 0,
+  "remoteRequests": [],
+  "errors": []
+ },
+ "walk": {
+  "rowClickGoesToDetail": true,
+  "detailRows": 28,
+  "firstRow": "阻断 不安全的 HTML 注入 未经转义的用户输入被写入 innerHTML src/pages/detail/Comment.tsx:407 2026-01-04 周雨欣",
+  "locHref": "https://gitlab.example.com/platform/web-monorepo/-/blob/69a3fdbf/apps/checkout/src/pages/detail/Comment.tsx#L407",
+  "filterBlocker": [
+   3,
+   "3 / 28 个"
+  ],
+  "emptyStateShown": true,
+  "afterReset": 28,
+  "sortTime": [
+   "ascending",
+   "2026-11-19"
+  ],
+  "backGoesToList": 20,
+  "searchList": [
+   5,
+   "5 / 20 个"
+  ],
+  "clearVisible": "visible",
+  "afterClear": [
+   20,
+   "list-q"
+  ],
+  "keyboardEnter": "/app/checkout",
+  "browserBack": "/",
+  "pressScale": "0.96",
+  "darkAfterClick": true,
+  "errors": []
+ },
+ "slowSwap": {
+  "rest": {
+   "light": "opacity 1.00 scale 1.00 blur(0px)",
+   "dark": "opacity 0.00 scale 0.25 blur(4px)"
+  },
+  "10%速 600ms": {
+   "light": "opacity 0.49 scale 0.61 blur(2.05465px)",
+   "dark": "opacity 0.51 scale 0.64 blur(1.94535px)"
+  },
+  "10%速 1200ms": {
+   "light": "opacity 0.17 scale 0.38 blur(3.3053px)",
+   "dark": "opacity 0.83 scale 0.87 blur(0.6947px)"
+  },
+  "打断后 100ms": {
+   "light": "opacity 0.17 scale 0.38 blur(3.31239px)",
+   "dark": "opacity 0.83 scale 0.87 blur(0.687611px)"
+  },
+  "打断后结束": {
+   "light": "opacity 1.00 scale 1.00 blur(0px)",
+   "dark": "opacity 0.00 scale 0.25 blur(4px)"
+  }
+ },
+ "slowStagger": {
+  "10%速 1000ms": "0.39 0.01 0.00 0.00",
+  "10%速 2500ms": "0.82 0.55 0.21 0.00",
+  "10%速 4000ms": "1.00 0.93 0.72 0.42",
+  "10%速 8000ms": "1.00 1.00 1.00 1.00"
+ },
+ "staggerReplaysOnRouteChange": false,
+ "dark": {
+  "cardShadow": "oklch(1 0 0 / 0.08) 0px 0px 0px 1px",
+  "overflowX": 0
+ },
+ "narrow390-list": {
+  "overflowX": 0
+ },
+ "narrow390-detail": {
+  "overflowX": 0
+ },
+ "reducedMotion": {
+  "animations": 0,
+  "opacity": "1"
+ }
+}
